@@ -9,6 +9,7 @@
     "test": "test"
   },
   "scripts": {
+    "build": "tsc",
     "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
   },
   "keywords": [],
