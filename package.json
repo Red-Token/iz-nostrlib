@@ -1,0 +1,50 @@
+{
+  "name": "iz-nostrlib",
+  "version": "0.0.1",
+  "description": "Library that support Nostr messages",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
+  },
+  "keywords": [],
+  "author": "Rene Malmgren",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/expect": "^24.3.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.9.0",
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2",
+    "mock-local-storage": "^1.1.24",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "mocha": {
+    "node-option": [
+      "import=tsx"
+    ]
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.5.0",
+    "@welshman/app": "~0.0.29",
+    "@welshman/content": "~0.0.12",
+    "@welshman/dvm": "~0.0.10",
+    "@welshman/feeds": "~0.0.25",
+    "@welshman/lib": "~0.0.26",
+    "@welshman/net": "~0.0.38",
+    "@welshman/signer": "~0.0.14",
+    "@welshman/store": "~0.0.12",
+    "@welshman/util": "~0.0.45",
+    "deepmerge": "^4.3.1",
+    "node-ssh": "^13.2.0",
+    "nostr-tools": "^2.10.3"
+  }
+}
