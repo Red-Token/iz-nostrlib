@@ -1,5 +1,5 @@
 import {TrustedEvent} from "@welshman/util";
-import EventEmitter from "node:events";
+import EventEmitter from "events";
 
 export enum EventType {
     DISCOVERED = 'discovered',

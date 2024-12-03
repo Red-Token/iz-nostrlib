@@ -4,6 +4,7 @@ import {generateSecretKey, getPublicKey, nip19} from "nostr-tools";
 import {Subscription} from "./Subscription";
 import {Publisher} from "./Publisher";
 import {SynchronisedEventStream} from "./SynchronisedEventStream";
+import {ISigner} from "@welshman/signer";
 
 type SignerData = {
     type: SignerType,
@@ -59,7 +60,7 @@ export class SynchronisedSession {
         },
     }
 
-    private signer: any;
+    protected signer: ISigner | undefined;
     public eventStream: SynchronisedEventStream;
 
     /**

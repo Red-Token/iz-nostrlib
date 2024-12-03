@@ -1,15 +1,17 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Library that support Nostr messages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
+  "type": "module",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
   },
   "keywords": [],
@@ -45,6 +47,7 @@
     "@welshman/store": "~0.0.12",
     "@welshman/util": "~0.0.45",
     "deepmerge": "^4.3.1",
+    "events": "^3.3.0",
     "node-ssh": "^13.2.0",
     "nostr-tools": "^2.10.3"
   }
