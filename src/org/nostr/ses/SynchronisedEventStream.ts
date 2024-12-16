@@ -1,14 +1,20 @@
 import {TrustedEvent} from "@welshman/util";
-import EventEmitter from "events";
+import mitt from 'mitt';
 
 export enum EventType {
     DISCOVERED = 'discovered',
     CONFIRMED = 'confirmed',
 }
 
+type NostrEvents = {
+    discovered: TrustedEvent
+    confirmed: TrustedEvent
+}
+
+
 export class SynchronisedEventStream {
     eventLog = new Map<string, TrustedEvent>()
-    public emitter = new EventEmitter
+    public emitter = mitt<NostrEvents>()
 
     constructor() {
     }
