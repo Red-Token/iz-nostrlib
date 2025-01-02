@@ -6,7 +6,7 @@ import {Publisher} from "./Publisher";
 import {SynchronisedEventStream} from "./SynchronisedEventStream";
 import {ISigner} from "@welshman/signer";
 
-type SignerData = {
+export type SignerData = {
     type: SignerType,
     nsec?: string,
     pubkey?: string,
@@ -26,7 +26,7 @@ export enum SignerType {
  *
  * if it's nip01 (NSes) then you use session.secret to get the NSec in HEX
  *
- * if it's nip07 (Browser extension) the just activate it, we dont use anything else
+ * if it's nip07 (Browser extension) the just activate it, we don't use anything else
  *
  * if it's nip46 (Remote signer) you create a Signer based on a broker that uses session.secret, and session.handler
  *
@@ -65,24 +65,27 @@ export class SynchronisedSession {
 
     /**
      * Arms the Session with the signature data
-     * @param signerData
      * @param relays
      */
-    constructor(public signerData: SignerData, public readonly relays: string[]) {
+    constructor(public readonly relays: string[]) {
         this.eventStream = new SynchronisedEventStream()
     }
 
     /**
      * Init the Signer
-     * @param session
+     * @param signerData
      */
-    async init(): Promise<SynchronisedSession> {
+    async init(signerData: SignerData): Promise<SynchronisedSession> {
         return new Promise<SynchronisedSession>((resolve, reject) => {
-            const wsession = SynchronisedSession.transformer[this.signerData.type](this.signerData)
+            const wsession = SynchronisedSession.transformer[signerData.type](signerData)
             addSession(wsession)
             this.signer = getSigner(wsession)
             resolve(this)
         })
+    }
+
+    isInitialized(): boolean {
+        return this.signer !== undefined
     }
 
     createPublisher() {
