@@ -14,6 +14,7 @@ export class Publisher {
     constructor(readonly session: SynchronisedSession) {
     }
 
+    // TODO: There is a big dragon here, we dont select the signer!
     // TODO: Make the a class
     publish(kind: number, payload: CreateEventOpts) {
         const event = createEvent(kind, payload)

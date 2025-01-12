@@ -1,13 +1,13 @@
 import {expect} from 'chai';
-import {Nip52CalendarEvent, Nip52CalendarEventTemplate} from "../src/org/nostr/nip52/Nip52CalendarEventTemplate";
+import {Nip52CalendarEvent, Nip52CalendarEventTemplateBuilder} from "../src/org/nostr/nip52/Nip52CalendarEventTemplate";
 import {randomUUID} from "crypto";
 import {createEvent, normalizeRelayUrl} from "@welshman/util";
 import {prepEvent, publishThunk} from "@welshman/app";
 import {SignerType, SynchronisedSession} from "../src";
 
-describe('Async Test Example', () => {
-    it('should complete an async operation', async () => {
-        const et = new Nip52CalendarEventTemplate(randomUUID(), 'Title', 'Cool Event', '2024-10-13')
+describe('Zool is Cool', () => {
+    it('Alice invites Bob for tea!', async () => {
+        const et = new Nip52CalendarEventTemplateBuilder(randomUUID(), 'Tea in Wonderland', 'Cool Event', '2024-10-13')
         let nip52EventTemplate = et.createNip52EventTemplate();
         const eventThin = createEvent(1234, et.createNip52EventTemplate())
 

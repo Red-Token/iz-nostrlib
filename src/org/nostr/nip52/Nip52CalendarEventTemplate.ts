@@ -1,15 +1,19 @@
 import {HashedEvent, TrustedEvent} from "@welshman/util";
+import {ms} from "@welshman/lib";
 
 function getISO8601Date(date: Date) {
     return date.toISOString().split('T')[0]
 }
 
-export class AbstractNip52CalendarEvent {
+export class AbstractNip52Event {
+}
+
+export class AbstractNip52CalendarEvent extends AbstractNip52Event {
     public readonly start: Date;
     public readonly end?: Date;
 
     constructor(
-        private readonly uuid: string,
+        readonly uuid: string,
         public title: string,
         public description: string,
         start: Date | string,
@@ -20,9 +24,13 @@ export class AbstractNip52CalendarEvent {
         public tags?: string[],
         public refs?: string[],
     ) {
+        super()
         this.start = typeof start === 'string' ? new Date(start) : start;
         if (end != undefined) this.end = typeof end === 'string' ? new Date(end) : end
     }
+}
+
+export class Nip52CalendarEventTemplateBuilder extends AbstractNip52CalendarEvent {
 
     createNip52EventTemplate() {
 
@@ -44,9 +52,6 @@ export class AbstractNip52CalendarEvent {
             tags
         }
     }
-}
-
-export class Nip52CalendarEventTemplate extends AbstractNip52CalendarEvent {
 }
 
 function safeFindOptionalSingleTagValue(event: TrustedEvent, tag: string): string | undefined {
@@ -87,4 +92,99 @@ export class Nip52CalendarEvent extends AbstractNip52CalendarEvent {
             safeFindOptionalMultiTagValue(event, 'r'),
         );
     }
+
+
+    getCoordinate(): string {
+        return `${this.event.kind}:${this.event.pubkey}:${this.uuid}`
+    }
+
 }
+
+export enum Nip52RsvpStatusType {
+    ACCEPTED = 'accepted',
+    DECLINED = 'declined',
+    TENTATIVE = 'tentative',
+}
+
+export enum Nip52IndividualStatusType {
+    FREE = 'free',
+    BUSY = 'busy',
+}
+
+export class Nip52CalendarEventRSVPBuilder extends AbstractNip52Event {
+    constructor(protected cal: Nip52CalendarEvent,
+                public status: Nip52RsvpStatusType,
+                public message: string,
+                public fb?: Nip52IndividualStatusType) {
+        super()
+    }
+
+    createTemplate(addEventIdTag: boolean = true, addEventCreatorTag: boolean = true) {
+
+        const tags = [
+            // TODO: add optional relay here
+            ['a', `${this.cal.event.kind}:${this.cal.event.pubkey}:${this.cal.uuid}`],
+            ['d', this.cal.uuid],
+            ['status', this.status],
+        ];
+
+        // TODO: add optional relay here
+        addEventIdTag && tags.push(['e', this.cal.event.id])
+        this.fb && this.status !== Nip52RsvpStatusType.DECLINED && tags.push(['fb', this.fb]);
+        addEventCreatorTag && tags.push(['p', this.cal.event.pubkey]);
+
+        return {
+            content: JSON.stringify(this.message),
+            tags
+        }
+    }
+}
+
+function getEnumFromValue<T>(enm: Object, value: string | undefined): T | undefined {
+    return Object.values(enm).find((enumValue) => enumValue === value) as T | undefined;
+}
+
+function getSafeEnumFromValue<T>(enm: Object, value: string): T {
+    const res = getEnumFromValue<T>(enm, value);
+
+    if (res === undefined)
+        throw new Error('Not so fast')
+
+    return res
+}
+
+export class Nip52CalendarEventRSVPMessage extends AbstractNip52Event {
+    public readonly coordinate
+    public readonly status: Nip52RsvpStatusType
+    public readonly uuid: string
+    public readonly message: string
+    public readonly fb?: Nip52IndividualStatusType
+    public readonly calendarEventId?: string
+
+    constructor(public event: HashedEvent) {
+        super()
+        this.coordinate = safeFindSingleTagValue(event, 'a')
+        this.status = getSafeEnumFromValue(Nip52RsvpStatusType, safeFindSingleTagValue(event, 'status'))
+        this.uuid = safeFindSingleTagValue(event, 'd')
+        this.message = JSON.parse(event.content)
+        this.fb = getEnumFromValue(Nip52IndividualStatusType, safeFindOptionalSingleTagValue(event, 'fb'))
+        this.calendarEventId = safeFindOptionalSingleTagValue(event, 'e')
+    }
+}
+
+export class Nip52CalendarEventEntity {
+    public log: AbstractNip52Event[] = []
+
+    constructor() {
+    }
+
+    onNip52CalendarEventMessage(msg: Nip52CalendarEvent) {
+        this.log.push(msg)
+    }
+
+    onNip52CalendarEventRSVPMessage(msg: Nip52CalendarEventRSVPMessage) {
+        this.log.push(msg)
+    }
+}
+
+
