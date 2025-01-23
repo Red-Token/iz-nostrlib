@@ -1,6 +1,4 @@
 import {addSession, getSigner, Session} from "@welshman/app";
-import {bytesToHex} from "@noble/hashes/utils";
-import {generateSecretKey, getPublicKey, nip19} from "nostr-tools";
 import {Subscription} from "./Subscription";
 import {Publisher} from "./Publisher";
 import {SynchronisedEventStream} from "./SynchronisedEventStream";
@@ -11,6 +9,9 @@ export type SignerData = {
     type: SignerType,
     nsec?: string,
     pubkey?: string,
+    relays?: string[],
+    rpubkey?: string,
+    secret?: string,
 }
 
 export enum SignerType {
@@ -83,7 +84,7 @@ export class SynchronisedSession {
     }
 
     createSubscription(filters: any) {
-        return new Subscription(this, filters)
+        return new Subscription(this, filters, this.relays)
     }
 
     async getPublicKey() {

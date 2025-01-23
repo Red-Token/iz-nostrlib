@@ -1,9 +1,8 @@
 // import {SignerData, SynchronisedSession} from "../ses/SynchronisedSession";
-import {SynchronisedSession, type SignerData} from "../ses/SynchronisedSession";
-import {Session, sessions} from "@welshman/app";
-import {generateSecretKey, getPublicKey, nip19} from "nostr-tools";
+import {type SignerData, SynchronisedSession} from "../ses/SynchronisedSession";
+import {Session} from "@welshman/app";
+import {getPublicKey, nip19} from "nostr-tools";
 import {bytesToHex} from "@noble/hashes/utils";
-import {getNip07, Nip07Signer} from "@welshman/signer";
 
 export class NostrClient {
     static instance: NostrClient;
@@ -31,11 +30,19 @@ export class NostrClient {
             return {method: session.type, pubkey: session.pubkey ? session.pubkey : ""}
         },
         'nip46': (session: SignerData): Session => {
-            // Create temp id
-            const sessionSecretKey = generateSecretKey()
-            const pubkey = getPublicKey(sessionSecretKey)
+            // // Create temp id
+            // const sessionSecretKey = generateSecretKey()
+            // const pubkey = getPublicKey(sessionSecretKey)
             // TODO This does not work at all
-            return {method: session.type, pubkey: session.pubkey ? session.pubkey : "", handler: {relays: [], pubkey}}
+            return {
+                method: session.type,
+                pubkey: session.pubkey ? session.pubkey : "",
+                secret: session.secret!,
+                handler: {
+                    relays: session.relays!,
+                    pubkey: session.rpubkey!
+                }
+            }
         },
     }
 
