@@ -11,7 +11,6 @@ type NostrEvents = {
     confirmed: TrustedEvent
 }
 
-
 export class SynchronisedEventStream {
     eventLog = new Map<string, TrustedEvent>()
     public emitter = mitt<NostrEvents>()
@@ -24,6 +23,8 @@ export class SynchronisedEventStream {
             this.emitter.emit(EventType.CONFIRMED, event)
             return
         }
+
+        console.log("RECEIVED:" + event.id)
 
         this.eventLog.set(event.id, event)
         this.emitter.emit(EventType.DISCOVERED, event)

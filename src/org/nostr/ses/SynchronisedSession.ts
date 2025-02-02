@@ -1,9 +1,7 @@
 import {addSession, getSigner, Session} from "@welshman/app";
-import {Subscription} from "./Subscription";
-import {Publisher} from "./Publisher";
-import {SynchronisedEventStream} from "./SynchronisedEventStream";
+import {SynchronisedEventStream} from "./SynchronisedEventStream.js";
 import {ISigner} from "@welshman/signer";
-import {NostrClient} from "../client/NostrClient";
+import {NostrClient} from "../client/NostrClient.js";
 
 export type SignerData = {
     type: SignerType,
@@ -48,7 +46,7 @@ export class SynchronisedSession {
      * Arms the Session with the signature data
      * @param relays
      */
-    constructor(public readonly relays: string[]) {
+    constructor(public relays: string[]) {
         this.eventStream = new SynchronisedEventStream()
     }
 
@@ -79,13 +77,13 @@ export class SynchronisedSession {
         return this.signer !== undefined
     }
 
-    createPublisher() {
-        return new Publisher(this)
-    }
+    // createPublisher() {
+    //     return new Publisher(this, this.)
+    // }
 
-    createSubscription(filters: any) {
-        return new Subscription(this, filters, this.relays)
-    }
+    // createSubscription(filters: any) {
+    //     return new Subscription(this, filters, this.relays)
+    // }
 
     async getPublicKey() {
         return this.signer?.getPubkey();

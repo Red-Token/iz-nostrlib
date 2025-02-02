@@ -1,6 +1,8 @@
 import {createEvent, CreateEventOpts} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
-import {SynchronisedSession} from "./SynchronisedSession";
+import {SynchronisedSession} from "./SynchronisedSession.js";
+import {CommunityIdentity} from "../communities/Community.js";
+import {own} from "@welshman/signer";
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession
@@ -11,13 +13,11 @@ import {SynchronisedSession} from "./SynchronisedSession";
  *
  */
 export class Publisher {
-    constructor(readonly session: SynchronisedSession) {
+    constructor(readonly session: SynchronisedSession, private comminityIdentiy: CommunityIdentity) {
     }
 
-    // TODO: There is a big dragon here, we dont select the signer!
-    // TODO: Make the a class
     publish(kind: number, payload: CreateEventOpts) {
-        const event = createEvent(kind, payload)
+        const event = own(createEvent(kind, payload), this.comminityIdentiy.pubkey)
 
         // Sent the message
         return publishThunk({

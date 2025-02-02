@@ -1,5 +1,4 @@
-// import {SignerData, SynchronisedSession} from "../ses/SynchronisedSession";
-import {type SignerData, SynchronisedSession} from "../ses/SynchronisedSession";
+import {type SignerData, SynchronisedSession} from "../ses/SynchronisedSession.js";
 import {Session} from "@welshman/app";
 import {getPublicKey, nip19} from "nostr-tools";
 import {bytesToHex} from "@noble/hashes/utils";
