@@ -1,11 +1,14 @@
 import {HashedEvent, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent.js";
+import {nip04} from "nostr-tools";
 
 export class Nip9999SeederTorrentTransformationRequestEvent extends AbstractNipMiniEvent {
     static KIND: number = 9999;
 
     static build(event: HashedEvent) {
+
         return new Nip9999SeederTorrentTransformationRequestEvent(
+            safeFindSingleTagValue(event, 'p'),
             safeFindSingleTagValue(event, 'title'),
             safeFindSingleTagValue(event, 'x'),
             JSON.parse(event.content),
@@ -15,6 +18,7 @@ export class Nip9999SeederTorrentTransformationRequestEvent extends AbstractNipM
     }
 
     constructor(
+        public p: string,
         public title: string,
         public x: string,
         public content: any,
@@ -26,6 +30,7 @@ export class Nip9999SeederTorrentTransformationRequestEvent extends AbstractNipM
     createTemplate() {
         const tags = [
             ...this.tags,
+            ['p', this.p],
             ['title', this.title],
             ['x', this.x],
         ];
