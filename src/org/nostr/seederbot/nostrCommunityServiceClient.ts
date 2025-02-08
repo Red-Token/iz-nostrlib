@@ -21,6 +21,7 @@ export class NostrCommunityServiceClient {
                     {
                         kinds: [Nip9999SeederTorrentTransformationResponseEvent.KIND],
                         since: nowInSeconds,
+                        '#p': [communityIdentity.pubkey]
                         // authors: [page.params.pubkey]
                     }
                 ],

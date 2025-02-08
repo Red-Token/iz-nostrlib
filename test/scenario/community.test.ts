@@ -4,14 +4,14 @@ import {asyncCreateWelshmanSession, Community, NotificationEventType} from "../.
 import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData";
-import {NostrProfileMetaData} from "../../src/org/nostr/nip01/NostrProfileMetaData";
+import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
 import {Follow, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
 import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {expect} from "chai";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms: any) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Async Test Example', () => {
 
@@ -26,7 +26,7 @@ describe('Async Test Example', () => {
         })
 
         const aliceMessagePile = []
-        const bobMessagePile = []
+        const bobMessagePile: any = []
 
         const url = 'wss://relay.lxc'
         // const url = 'wss://relay.stream.labs.h3.se'
@@ -65,7 +65,7 @@ describe('Async Test Example', () => {
 
             aliceCi = ci
 
-            const profile: NostrProfileMetaData = {
+            const profile: NostrUserProfileMetaData = {
                 name: 'Alice', about: 'The Queen of tests', display_name: 'The only one',
                 website: '', bot: false, picture: '', banner: ''
             }
@@ -97,7 +97,7 @@ describe('Async Test Example', () => {
             const ci = com.createCommunityIdentity(ws)
             bobCi = ci
 
-            const profile: NostrProfileMetaData = {
+            const profile: NostrUserProfileMetaData = {
                 name: 'Bob', about: 'The King of tests', display_name: 'The only two',
                 website: '', bot: false, picture: '', banner: ''
             }

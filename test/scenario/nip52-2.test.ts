@@ -1,19 +1,9 @@
-import {
-    Nip52CalendarEvent,
-    Nip52CalendarEventEntity,
-    Nip52CalendarEventRSVPBuilder,
-    Nip52CalendarEventRSVPMessage,
-    Nip52CalendarEventTemplateBuilder,
-    Nip52IndividualStatusType,
-    Nip52RsvpStatusType
-} from "../../src/org/nostr/nip52/Nip52CalendarEventTemplate";
-import {randomUUID} from "crypto";
-import {createEvent, normalizeRelayUrl, TrustedEvent} from "@welshman/util";
+import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
 import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
 
-import {EventType, SignerData, SignerType} from "../../src";
-import {NostrClient} from "../../src/org/nostr/client/NostrClient";
+import {EventType, NostrClient, SignerData, SignerType} from "../../src";
 import {setContext} from "@welshman/lib";
+import {Subscription} from "../../src";
 
 describe('Async Test Example', () => {
     it('should complete an async operation', async () => {
@@ -66,12 +56,14 @@ describe('Async Test Example', () => {
 
         const coordinates = `${eventData.kind}:${eventData.pubkey}:${eventData.uuid}`;
 
+
+
         // Bob get the event id out of band.
-        const bobSub = bobSession1.createSubscription([
+        const bobSub = new Subscription(bobSession1,[
             // Here we subscribe to the membership kind
             {kinds: [eventData.kind], '#d': eventData.uuid, authors: [eventData.pubkey]},
             {kinds: [tmpKind2], '#a': coordinates},
-        ])
+        ], )
 
         console.log("THE END!")
     });

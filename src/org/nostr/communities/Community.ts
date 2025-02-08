@@ -11,9 +11,11 @@ import {ProfileService} from "../services/ProfileService.js";
 import {NostrClient} from "../client/NostrClient.js";
 import {addSession, getSigner, Session} from "@welshman/app";
 import {Nip01Signer, Nip07Signer, Nip46Signer, Nip55Signer} from "@welshman/signer";
+import {AbstractNostrContext} from "./AbstractNostrContext";
 
 export enum NotificationEventType {
     PROFILE = 'profile',
+    RELAYS = 'relays',
     TORRENT = 'torrent',
 }
 
@@ -37,25 +39,30 @@ export async function asyncCreateWelshmanSession(signerData: SignerData): Promis
     return {wSession, signer, pubkey}
 }
 
-export class CommunityIdentity {
+export class Identity {
+    constructor(public readonly welshmanData: WelshmanSessionData) {
+    }
+
+    public get pubkey(): string {
+        return this.welshmanData.pubkey;
+    }
+}
+
+export class CommunityIdentity extends Identity {
     followList: Follow[] = []
     private readonly followSession: SynchronisedSession
     private followSubscriptions: Subscription[] = []
     private notificationSubscriptions: Subscription[] = []
     public readonly pubkey: string
-    private welshmanData: WelshmanSessionData;
 
     public followPublisher: Publisher;
-    public profilePublisher: Publisher
 
     constructor(public readonly community: Community, data: WelshmanSessionData) {
-        this.welshmanData = data
+        super(data)
         this.pubkey = data.pubkey
         this.community.identities.set(this.pubkey, this)
 
-        this.profilePublisher = new Publisher(this.community.profileService, this)
-
-        this.followSession = new SynchronisedSession(community.relays);
+        this.followSession = new SynchronisedSession(community.relays.value);
         this.followPublisher = new Publisher(this.followSession, this)
         this.followSession.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
             if (event.kind === Nip02FollowListEvent.KIND) {
@@ -76,7 +83,7 @@ export class CommunityIdentity {
                 if (authors.length == 0)
                     return
 
-                for (const relay of community.relays) {
+                for (const relay of community.relays.value) {
                     const sub = new Subscription(
                         this.community.notificationSession,
                         [{kinds: [Nip35TorrentEvent.KIND], authors}],
@@ -93,7 +100,7 @@ export class CommunityIdentity {
         })
 
         // Create a subscription for populate the followList
-        for (const relay of community.relays) {
+        for (const relay of community.relays.value) {
             this.followSubscriptions.push(new Subscription(
                 this.followSession,
                 [{kinds: [Nip02FollowListEvent.KIND], authors: [this.pubkey]}],
@@ -114,42 +121,17 @@ export class CommunityIdentity {
     }
 }
 
-export class Community {
-    public readonly notificationSession: SynchronisedSession;
+export class Community extends AbstractNostrContext {
 
-    constructor(public name: string, public readonly relays: string[], public image?: string) {
-        this.notificationSession = new SynchronisedSession(relays);
-        this.notificationSession.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
-            if (event.kind === Nip35TorrentEvent.KIND) {
-                const torrentEvent = new Nip35TorrentEventBuilder(event).build()
-                this.notifications.emit(NotificationEventType.TORRENT, torrentEvent)
-            }
-        })
-    }
+    constructor(public name: string, relays: string[], public image?: string) {
+        super(relays)
 
-    public sessions: SynchronisedSession[] = []
-    public identities: Map<string, CommunityIdentity> = new Map()
-    public notifications = mitt()
-    public profileService = new ProfileService(this)
-
-    private sub: Subscription | undefined
-
-    public connect() {
-        // start service to update Kind 0
-        this.sub = new Subscription(
-            this.profileService,
-            [{kinds: [Nip01UserMetaDataEvent.KIND]}],
-            this.relays)
-    }
-
-    public disconnect() {
-        // stop service to update Kind 0
-        this.sub?.unsubscribe()
-        this.sub = undefined
-    }
-
-    public connected() {
-        return this.sub !== undefined
+        // this.notificationSession.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
+        //     if (event.kind === Nip35TorrentEvent.KIND) {
+        //         const torrentEvent = new Nip35TorrentEventBuilder(event).build()
+        //         this.notifications.emit(NotificationEventType.TORRENT, torrentEvent)
+        //     }
+        // })
     }
 
     createCommunityIdentity(welshmanSessionData: WelshmanSessionData): CommunityIdentity {

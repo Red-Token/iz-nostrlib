@@ -5,7 +5,6 @@ import {Filter, TrustedEvent} from "@welshman/util";
 export class Subscription {
     private sub: any;
 
-
     constructor(private session: SynchronisedSession, filters: Filter[], relays: string[]) {
 
         const psr: PartialSubscribeRequest = {
@@ -20,8 +19,5 @@ export class Subscription {
         }
 
         this.sub = subscribe(psr)
-    }
-
-    unsubscribe() {
     }
 }

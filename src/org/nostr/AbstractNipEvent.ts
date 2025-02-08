@@ -1,4 +1,4 @@
-import type {TrustedEvent} from "@welshman/util";
+import type {CreateEventOpts, TrustedEvent} from "@welshman/util";
 
 export class AbstractNipMiniMiniEvent {
     constructor(
@@ -7,17 +7,25 @@ export class AbstractNipMiniMiniEvent {
     }
 }
 
-export class AbstractNipMiniEvent extends AbstractNipMiniMiniEvent{
-    constructor(
+export abstract class AbstractNipMiniEvent extends AbstractNipMiniMiniEvent {
+    protected constructor(
         public tags: string[][] = [],
         event?: TrustedEvent
     ) {
         super(event);
     }
+
+    abstract get kind(): number
+
+    abstract get opts(): CreateEventOpts
+
+    get created_at(): number {
+        return this.event === undefined ? -1 : this.event.created_at
+    }
 }
 
-export class AbstractNipEvent extends AbstractNipMiniEvent {
-    constructor(
+export abstract class AbstractNipEvent extends AbstractNipMiniEvent {
+    protected constructor(
         public description: string,
         tags: string[][] = [],
         event?: TrustedEvent
