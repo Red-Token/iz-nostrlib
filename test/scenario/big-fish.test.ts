@@ -21,7 +21,7 @@ import * as fs from "node:fs";
 import {DynamicSynchronisedSession} from "../../src/org/nostr/ses/DynamicSynchronisedSession";
 import {updateIfNewer} from "../../src/org/nostr/util/scraps";
 import {AbstractEventHandler} from "../../src/org/nostr/services/AppDataService";
-import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
+import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
 import {AbstractNipMiniEvent} from "../../src/org/nostr/AbstractNipEvent";
 import {StaticEventProcessor} from "../../src/org/nostr/ses/StaticEventProcessor";
@@ -162,13 +162,10 @@ describe('Async Test Example', () => {
         const aliceBigFishPublisher = new DynamicPublisher(aliceBigFishSession, aliceBigFishIdentity)
 
         const aliceBigFishEventProcessor = new StaticEventProcessor([
-            {
-                kind: Nip35TorrentEvent.KIND,
-                builder: Nip35TorrentEvent.buildFromEvent,
-                handler: (event: Nip35TorrentEvent) => {
+            new Nip35TorrentEventHandler((event: Nip35TorrentEvent) => {
                     console.log(event)
                 }
-            }
+            )
         ])
 
         const aliceBigFishSubscription = new DynamicSubscription(aliceBigFishSession, [{kinds: [Nip35TorrentEvent.KIND]}])

@@ -3,7 +3,7 @@ import {EventType} from "../ses/SynchronisedEventStream.js";
 import {AbstractNostrContext} from "../communities/AbstractNostrContext.js";
 import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
 import {DynamicSubscription} from "../ses/DynamicSubscription.js";
-import {Nip78ArbitraryCustomAppData} from "../nip78/Nip78ArbitraryCustomAppData.js";
+import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData.js";
 import {updateIfNewer} from "../util/scraps.js";
 import {StaticEventProcessor} from "../ses/StaticEventProcessor.js";
 
@@ -26,14 +26,10 @@ export class AppDataService extends DynamicSynchronisedSession {
         super(context.relays)
 
         const eventProcessor = new StaticEventProcessor([
-            {
-                kind: Nip78ArbitraryCustomAppData.KIND,
-                builder: Nip78ArbitraryCustomAppData.buildFromEvent,
-                handler: (event: Nip78ArbitraryCustomAppData<any>) => {
-                    updateIfNewer(event, event.app,
-                        getOrCreate<string, string, Nip78ArbitraryCustomAppData<any>>(event.event?.pubkey!, this.appDataMap))
-                }
-            }
+            new Nip78ArbitraryCustomAppDataHandler((event: Nip78ArbitraryCustomAppData<any>) => {
+                updateIfNewer(event, event.app,
+                    getOrCreate<string, string, Nip78ArbitraryCustomAppData<any>>(event.event?.pubkey!, this.appDataMap))
+            })
         ])
 
         this.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
