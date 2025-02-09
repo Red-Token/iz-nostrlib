@@ -1,6 +1,6 @@
 import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
 import {setContext} from "@welshman/lib";
-import {asyncCreateWelshmanSession, Community, NotificationEventType} from "../../src/org/nostr/communities/Community";
+import {asyncCreateWelshmanSession, CommunityNostrContext, NotificationEventType} from "../../src/org/nostr/communities/CommunityNostrContext";
 import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData";
@@ -40,7 +40,7 @@ describe('Async Test Example', () => {
         let bobCom
 
 
-        const aliceCom = new Community('testcom', relays)
+        const aliceCom = new CommunityNostrContext('testcom', relays)
         // Alice
         {
             aliceCom.connect()
@@ -74,7 +74,7 @@ describe('Async Test Example', () => {
         }
 
         {
-            const com = new Community('testcom', relays)
+            const com = new CommunityNostrContext('testcom', relays)
             bobCom = com
 
             com.connect()

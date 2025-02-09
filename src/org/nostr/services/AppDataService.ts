@@ -1,18 +1,11 @@
 import type {TrustedEvent} from "@welshman/util";
 import {EventType} from "../ses/SynchronisedEventStream.js";
-import {Nip01UserMetaDataEvent} from "../nip01/Nip01UserMetaData.js";
 import {AbstractNostrContext} from "../communities/AbstractNostrContext.js";
 import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
 import {DynamicSubscription} from "../ses/DynamicSubscription.js";
-import {Nip65RelayListMetadataEvent} from "../nip65/Nip65RelayListMetadata.js";
-import {AbstractNipMiniEvent} from "../AbstractNipEvent";
-import {Nip78ArbitraryCustomAppData} from "../nip78/Nip78ArbitraryCustomAppData";
-import {updateIfNewer} from "../util/scraps";
-
-class AbstractEventHandler<T extends AbstractNipMiniEvent> {
-    constructor(public builder: (event: TrustedEvent) => T, public handler: (event: T) => void) {
-    }
-}
+import {Nip78ArbitraryCustomAppData} from "../nip78/Nip78ArbitraryCustomAppData.js";
+import {updateIfNewer} from "../util/scraps.js";
+import {StaticEventProcessor} from "../ses/StaticEventProcessor.js";
 
 function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
     let element = map.get(key);
@@ -32,24 +25,19 @@ export class AppDataService extends DynamicSynchronisedSession {
     constructor(context: AbstractNostrContext) {
         super(context.relays)
 
-        const eventHandlerMap = new Map<number, AbstractEventHandler<any>>()
-
-        eventHandlerMap.set(Nip78ArbitraryCustomAppData.KIND, {
-            builder: Nip78ArbitraryCustomAppData.buildFromEvent,
-            handler: (event: Nip78ArbitraryCustomAppData<any>) => {
-                // if (event.event === undefined) throw new Error("No event handler event handler");
-                updateIfNewer(event, event.app,
-                    getOrCreate<string, string, Nip78ArbitraryCustomAppData<any>>(event.event?.pubkey!, this.appDataMap))
+        const eventProcessor = new StaticEventProcessor([
+            {
+                kind: Nip78ArbitraryCustomAppData.KIND,
+                builder: Nip78ArbitraryCustomAppData.buildFromEvent,
+                handler: (event: Nip78ArbitraryCustomAppData<any>) => {
+                    updateIfNewer(event, event.app,
+                        getOrCreate<string, string, Nip78ArbitraryCustomAppData<any>>(event.event?.pubkey!, this.appDataMap))
+                }
             }
-        })
+        ])
 
         this.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
-            const eventHandler = eventHandlerMap.get(event.kind)
-
-            if (eventHandler === undefined)
-                throw Error('Unknown event')
-
-            eventHandler.handler(eventHandler.builder(event))
+            eventProcessor.processEvent(event)
         })
 
         context.identities.addListener((keys) => {
@@ -68,7 +56,7 @@ export class AppDataService extends DynamicSynchronisedSession {
         })
 
         // Activate dynamic subscription
-        for (const kind of eventHandlerMap.keys()) {
+        for (const kind of eventProcessor.eventHandlerMap.keys()) {
             new DynamicSubscription(
                 this,
                 [{kinds: [kind], authors: []}])

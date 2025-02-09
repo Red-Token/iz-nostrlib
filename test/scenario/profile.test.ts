@@ -3,10 +3,10 @@ import {setContext} from "@welshman/lib";
 import {
     Identity,
     asyncCreateWelshmanSession,
-    Community,
+    CommunityNostrContext,
     CommunityIdentity,
     NotificationEventType
-} from "../../src/org/nostr/communities/Community";
+} from "../../src/org/nostr/communities/CommunityNostrContext";
 import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";

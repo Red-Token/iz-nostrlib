@@ -57,7 +57,7 @@ export class CommunityIdentity extends Identity {
 
     public followPublisher: Publisher;
 
-    constructor(public readonly community: Community, data: WelshmanSessionData) {
+    constructor(public readonly community: CommunityNostrContext, data: WelshmanSessionData) {
         super(data)
         this.pubkey = data.pubkey
         this.community.identities.set(this.pubkey, this)
@@ -121,7 +121,7 @@ export class CommunityIdentity extends Identity {
     }
 }
 
-export class Community extends AbstractNostrContext {
+export class CommunityNostrContext extends AbstractNostrContext {
 
     constructor(public name: string, relays: string[], public image?: string) {
         super(relays)

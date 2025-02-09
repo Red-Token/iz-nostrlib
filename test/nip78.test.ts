@@ -6,10 +6,10 @@ import {Nip01UserMetaDataEvent} from "../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../src/org/nostr/nip01/NostrUserProfileMetaData";
 import {
     asyncCreateWelshmanSession,
-    Community,
+    CommunityNostrContext,
     CommunityIdentity,
     Identity
-} from "../src/org/nostr/communities/Community";
+} from "../src/org/nostr/communities/CommunityNostrContext";
 
 import {Subscription} from "../src";
 import {getDefaultAppContext, getDefaultNetContext, PartialSubscribeRequest, subscribe} from "@welshman/app";

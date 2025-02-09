@@ -1,7 +1,7 @@
 import {createEvent, CreateEventOpts} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
 import {SynchronisedSession} from "./SynchronisedSession.js";
-import {CommunityIdentity} from "../communities/Community.js";
+import {CommunityIdentity} from "../communities/CommunityNostrContext";
 import {own} from "@welshman/signer";
 
 /**

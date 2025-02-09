@@ -2,14 +2,14 @@ import {Nip9999SeederTorrentTransformationRequestEvent} from "./Nip9999SeederCon
 import {SynchronisedSession} from "../ses/SynchronisedSession.js";
 import {Subscription} from "../ses/Subscription.js";
 import {Publisher} from "../ses/Publisher.js";
-import {Community, CommunityIdentity} from "../communities/Community.js";
+import {CommunityNostrContext, CommunityIdentity} from "../communities/CommunityNostrContext";
 
 export class NostrCommunityServiceBot {
     public session: SynchronisedSession
     public subscriptions: Subscription[] = []
     public publisher: Publisher;
 
-    constructor(public community: Community, public communityIdentity: CommunityIdentity) {
+    constructor(public community: CommunityNostrContext, public communityIdentity: CommunityIdentity) {
         this.session = new SynchronisedSession(community.relays)
 
         const nowInSeconds = Math.floor(Date.now() / 1000);

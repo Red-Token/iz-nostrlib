@@ -1,6 +1,6 @@
 import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents";
 import {SynchronisedSession} from "../ses/SynchronisedSession.js";
-import {Community, CommunityIdentity} from "../communities/Community.js";
+import {CommunityNostrContext, CommunityIdentity} from "../communities/CommunityNostrContext";
 import {Publisher} from "../ses/Publisher.js";
 import {Subscription} from "../ses/Subscription.js";
 
@@ -9,7 +9,7 @@ export class NostrCommunityServiceClient {
     public subscriptions: Subscription[] = []
     public publisher: Publisher;
 
-    constructor(public community: Community, public communityIdentity: CommunityIdentity) {
+    constructor(public community: CommunityNostrContext, public communityIdentity: CommunityIdentity) {
         this.session = new SynchronisedSession(community.relays)
 
         const nowInSeconds = Math.floor(Date.now() / 1000);

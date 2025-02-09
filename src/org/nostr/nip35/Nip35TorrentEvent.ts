@@ -1,37 +1,48 @@
-import type {HashedEvent, TrustedEvent} from "@welshman/util";
+import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {
+    AbstractNipMiniEvent,
     safeFindOptionalMultiTagValue,
     safeFindOptionalMultiTagValues,
     safeFindSingleTagValue
 } from "../AbstractNipEvent.js";
 
-export class AbstractNip35TorrentEvent {
-    constructor(
-        public tags: string[][] = [],
-    ) {
-    }
-}
-
-export class Nip35TorrentEvent extends AbstractNip35TorrentEvent {
+export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     public static KIND: number = 2003;
-    // public static KIND: number = 9999;
-    public event?: TrustedEvent
+
+    // TODO Make the safeMethods eat the values and only leave the last
+    static buildFromEvent(event: HashedEvent) {
+        return new Nip35TorrentEvent(
+            safeFindSingleTagValue(event, 'title'),
+            safeFindSingleTagValue(event, 'x'),
+            JSON.parse(event.content),
+            safeFindOptionalMultiTagValues(event, 'file'),
+            safeFindOptionalMultiTagValue(event, 'tracker'),
+            safeFindOptionalMultiTagValue(event, 'i'),
+            safeFindOptionalMultiTagValue(event, 't'),
+            [],
+            event
+        )
+    }
 
     constructor(
         public title: string,
         public x: string,
         public description: string,
-        public files: string[][],
-        public trackers: string[],
-        public is: string[],
-        public ts: string[],
+        public files: string[][] = [],
+        public trackers: string[] = [],
+        public is: string[] = [],
+        public ts: string[] = [],
         tags: string[][] = [],
         event?: TrustedEvent) {
-        super(tags)
-        this.event = event
+        super(tags, event)
     }
 
-    createTemplate() {
+    get kind() {
+        return Nip35TorrentEvent.KIND
+    }
+
+    get opts(): CreateEventOpts {
+
         const tags = [
             ...this.tags,
             ['title', this.title],
@@ -75,58 +86,24 @@ export enum Nip10EtagMarker {
     MENTION = 'mention',
 }
 
-export function createRefETags(event: TrustedEvent, relay: string = ""): string[][] {
-    const eTags = safeFindOptionalMultiTagValues(event, 'e')
-
-    // Is this a root event
-    if (eTags.length > 0) {
-        const rootTag = eTags.find(tag => tag.length > 3 && tag[3] === Nip10EtagMarker.ROOT)
-
-        if (rootTag === undefined)
-            throw new Error('not good, eTags found and no tag marked root')
-
-        return [rootTag, ['e', event.id, relay, Nip10EtagMarker.REPLY, event.pubkey]]//The root tag is the eTag marked as root
-    } else {
-        //The root tag is the incoming event
-        return [['e', event.id, relay, Nip10EtagMarker.ROOT, event.pubkey]]
-    }
-}
-
-export function createRefPTags(event: TrustedEvent, relay: string = ""): string[][] {
-    return [
-        ...safeFindOptionalMultiTagValues(event, 'p'),
-        ['p', event.pubkey],
-    ]
-}
-
-
-export class Nip35TorrentEventBuilder {
-    constructor(private event: HashedEvent) {
-    }
-
-    build() {
-        return new Nip35TorrentEvent(
-            safeFindSingleTagValue(this.event, 'title'),
-            safeFindSingleTagValue(this.event, 'x'),
-            JSON.parse(this.event.content),
-            safeFindOptionalMultiTagValues(this.event, 'file'),
-            safeFindOptionalMultiTagValue(this.event, 'tracker'),
-            safeFindOptionalMultiTagValue(this.event, 'i'),
-            safeFindOptionalMultiTagValue(this.event, 't'),
-            [],
-            this.event
-        )
-    }
-}
-
-export class Nip35TorrentEventComments extends AbstractNip35TorrentEvent {
+export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
     static KIND: number = 2004;
 
-    constructor(public description: string,tags: string[][] = []) {
+    static buildFromEvent(event: HashedEvent) {
+        return new Nip35TorrentEventComments(
+            JSON.parse(event.content)
+        )
+    }
+
+    constructor(public description: string, tags: string[][] = []) {
         super(tags)
     }
 
-    createTemplate() {
+    get kind() {
+        return Nip35TorrentEventComments.KIND
+    }
+
+    get opts(): CreateEventOpts {
         const tags = [
             ...this.tags,
         ];
@@ -137,46 +114,3 @@ export class Nip35TorrentEventComments extends AbstractNip35TorrentEvent {
         }
     }
 }
-
-export class Nip35TorrentEventCommentsBuilder {
-    constructor(private event: HashedEvent) {
-    }
-
-    build() {
-        return new Nip35TorrentEventComments(
-            JSON.parse(this.event.content)
-        )
-    }
-}
-
-
-// export class Nip52CalendarEvent extends AbstractNip52CalendarEvent {
-//     constructor(public event: HashedEvent) {
-//         super(
-//             safeFindSingleTagValue(event, 'd'),
-//             safeFindSingleTagValue(event, 'title'),
-//             JSON.parse(event.content),
-//             safeFindSingleTagValue(event, 'start'),
-//             safeFindOptionalSingleTagValue(event, 'end'),
-//             safeFindOptionalMultiTagValue(event, 'locations'),
-//             safeFindOptionalMultiTagValue(event, 'g'),
-//             safeFindOptionalMultiTagValues(event, 'participant'),
-//             safeFindOptionalMultiTagValue(event, 't'),
-//             safeFindOptionalMultiTagValue(event, 'r'),
-//         );
-//     }
-// }
-//
-// function getEnumFromValue<T>(enm: Object, value: string | undefined): T | undefined {
-//     return Object.values(enm).find((enumValue) => enumValue === value) as T | undefined;
-// }
-//
-// function getSafeEnumFromValue<T>(enm: Object, value: string): T {
-//     const res = getEnumFromValue<T>(enm, value);
-//
-//     if (res === undefined)
-//         throw new Error('Not so fast')
-//
-//     return res
-// }
-

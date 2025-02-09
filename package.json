@@ -22,6 +22,7 @@
     "@types/expect": "^24.3.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.9.0",
+    "@types/ssh2": "^1.15.4",
     "chai": "^5.1.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
@@ -49,6 +50,7 @@
     "deepmerge": "^4.3.1",
     "mitt": "^3.0.1",
     "node-ssh": "^13.2.0",
-    "nostr-tools": "^2.10.3"
+    "nostr-tools": "^2.10.3",
+    "ssh2": "^1.16.0"
   }
 }

@@ -1,4 +1,4 @@
-import {asyncCreateWelshmanSession, Community, CommunityIdentity} from "../../src/org/nostr/communities/Community";
+import {asyncCreateWelshmanSession, CommunityNostrContext, CommunityIdentity} from "../../src/org/nostr/communities/CommunityNostrContext";
 import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
 import {EventType, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip35TorrentEvent, Nip35TorrentEventBuilder} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
@@ -22,7 +22,7 @@ describe('Async Test Example', () => {
 
         const ws = await asyncCreateWelshmanSession(bobSignerData)
 
-        const c = new Community(
+        const c = new CommunityNostrContext(
             'iz-stream',
             relays,
             'https://img.freepik.com/free-psd/close-up-delicious-apple_23-2151868338.jpg'

@@ -1,6 +1,6 @@
 import {SynchronisedSession} from "../ses/SynchronisedSession.js";
 import {ReactiveArray} from "../util/ReactiveArray.js";
-import {Identity} from "./Community.js";
+import {Identity} from "./CommunityNostrContext";
 import {ReactiveMap} from "../util/ReactiveMap";
 
 export class AbstractNostrContext {
