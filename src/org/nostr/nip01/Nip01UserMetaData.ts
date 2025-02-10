@@ -1,12 +1,11 @@
 import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {
-    AbstractNipMiniEvent, safeFindOptionalMultiTagValue,
+    AbstractNipMiniEvent,
     safeFindOptionalMultiTagValues,
     safeFindOptionalSingleTagValue
 } from "../AbstractNipEvent.js";
 import {NostrUserProfileMetaData} from "./NostrUserProfileMetaData.js";
 import {AbstractEventHandler} from "../ses/StaticEventProcessor";
-import {Nip78ArbitraryCustomAppData} from "../nip78/Nip78ArbitraryCustomAppData";
 
 export enum UserType {
     INDIVIDUAL = "individual",

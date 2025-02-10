@@ -3,37 +3,31 @@ import {SynchronisedSession} from "../ses/SynchronisedSession.js";
 import {Subscription} from "../ses/Subscription.js";
 import {Publisher} from "../ses/Publisher.js";
 import {CommunityNostrContext, CommunityIdentity} from "../communities/CommunityNostrContext";
+import {DynamicPublisher} from "../ses/DynamicPublisher";
+import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
+import {DynamicSubscription} from "../ses/DynamicSubscription";
 
 export class NostrCommunityServiceBot {
-    public session: SynchronisedSession
-    public subscriptions: Subscription[] = []
-    public publisher: Publisher;
+    public session: DynamicSynchronisedSession
+    public publisher: DynamicPublisher;
 
     constructor(public community: CommunityNostrContext, public communityIdentity: CommunityIdentity) {
-        this.session = new SynchronisedSession(community.relays)
+        this.session = new DynamicSynchronisedSession(community.relays)
 
         const nowInSeconds = Math.floor(Date.now() / 1000);
 
-        for (const relay of community.relays) {
-            const sub = new Subscription(
-                this.session,
-                [
-                    {
-                        kinds: [Nip9999SeederTorrentTransformationRequestEvent.KIND],
-                        since: nowInSeconds,
-                        '#p': [communityIdentity.pubkey]
-                        // authors: [page.params.pubkey]
-                    }
-                ],
-                [relay]
-            );
+        new DynamicSubscription(
+            this.session,
+            [
+                {
+                    kinds: [Nip9999SeederTorrentTransformationRequestEvent.KIND],
+                    since: nowInSeconds,
+                    '#p': [communityIdentity.pubkey]
+                    // authors: [page.params.pubkey]
+                }
+            ],
+        );
 
-            this.subscriptions.push(sub)
-        }
-
-        this.publisher = new Publisher(this.session, communityIdentity)
-
-        // this.session.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
-        // })
+        this.publisher = new DynamicPublisher(this.session, communityIdentity)
     }
 }

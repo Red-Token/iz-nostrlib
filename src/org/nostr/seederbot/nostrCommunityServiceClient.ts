@@ -1,39 +1,31 @@
 import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents";
-import {SynchronisedSession} from "../ses/SynchronisedSession.js";
-import {CommunityNostrContext, CommunityIdentity} from "../communities/CommunityNostrContext";
-import {Publisher} from "../ses/Publisher.js";
+import {CommunityIdentity, CommunityNostrContext} from "../communities/CommunityNostrContext";
 import {Subscription} from "../ses/Subscription.js";
+import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
+import {DynamicSubscription} from "../ses/DynamicSubscription";
+import {DynamicPublisher} from "../ses/DynamicPublisher";
 
 export class NostrCommunityServiceClient {
-    public session: SynchronisedSession
+    public session: DynamicSynchronisedSession
     public subscriptions: Subscription[] = []
-    public publisher: Publisher;
+    public publisher: DynamicPublisher
 
     constructor(public community: CommunityNostrContext, public communityIdentity: CommunityIdentity) {
-        this.session = new SynchronisedSession(community.relays)
+        this.session = new DynamicSynchronisedSession(community.relays)
 
         const nowInSeconds = Math.floor(Date.now() / 1000);
 
-        for (const relay of community.relays) {
-            const sub = new Subscription(
+            const sub = new DynamicSubscription(
                 this.session,
                 [
                     {
                         kinds: [Nip9999SeederTorrentTransformationResponseEvent.KIND],
                         since: nowInSeconds,
                         '#p': [communityIdentity.pubkey]
-                        // authors: [page.params.pubkey]
                     }
                 ],
-                [relay]
             );
 
-            this.subscriptions.push(sub)
-        }
-
-        this.publisher = new Publisher(this.session, communityIdentity)
-
-        // this.session.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
-        // })
+        this.publisher = new DynamicPublisher(this.session, communityIdentity)
     }
 }
