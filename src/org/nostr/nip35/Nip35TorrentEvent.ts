@@ -5,7 +5,7 @@ import {
     safeFindOptionalMultiTagValues,
     safeFindSingleTagValue
 } from "../AbstractNipEvent.js";
-import {AbstractEventHandler} from "../ses/StaticEventProcessor";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 
 export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     public static KIND: number = 2003;
@@ -81,7 +81,7 @@ export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip35TorrentEventHandler extends AbstractEventHandler<Nip35TorrentEvent> {
+export class Nip35TorrentEventHandler extends AbstractEventProcessor<Nip35TorrentEvent> {
     constructor(handler: (event: Nip35TorrentEvent) => void) {
         super(Nip35TorrentEvent.KIND, Nip35TorrentEvent.buildFromEvent, handler);
     }
@@ -122,7 +122,7 @@ export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip35TorrentEventCommentsHandler extends AbstractEventHandler<Nip35TorrentEventComments> {
+export class Nip35TorrentEventCommentsHandler extends AbstractEventProcessor<Nip35TorrentEventComments> {
     constructor(handler: (event: Nip35TorrentEventComments) => void) {
         super(Nip35TorrentEventComments.KIND, Nip35TorrentEventComments.buildFromEvent, handler);
     }

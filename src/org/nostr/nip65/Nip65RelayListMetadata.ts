@@ -1,6 +1,6 @@
 import {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import {AbstractEventHandler} from "../ses/StaticEventProcessor";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 import {Nip35TorrentEventComments} from "../nip35/Nip35TorrentEvent";
 
 export enum RelayType {
@@ -47,7 +47,7 @@ export class Nip65RelayListMetadataEvent extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip65RelayListMetadataEventHandler extends AbstractEventHandler<Nip65RelayListMetadataEvent> {
+export class Nip65RelayListMetadataEventHandler extends AbstractEventProcessor<Nip65RelayListMetadataEvent> {
     constructor(handler: (event: Nip65RelayListMetadataEvent) => void) {
         super(Nip65RelayListMetadataEvent.KIND, Nip65RelayListMetadataEvent.buildFromEvent, handler);
     }

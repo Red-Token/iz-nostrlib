@@ -7,3 +7,5 @@ export * from './org/nostr/client/NostrClient.js'
 export * from './org/nostr/seederbot/Nip9999SeederControllEvents.js'
 export * from './org/nostr/seederbot/nostrCommunityServiceBot.js'
 export * from './org/nostr/seederbot/nostrCommunityServiceClient.js'
+
+export * from './org/nostr/nip02/Nip02FollowListEvent.js'

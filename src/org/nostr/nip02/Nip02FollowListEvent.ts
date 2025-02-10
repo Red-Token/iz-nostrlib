@@ -1,6 +1,6 @@
 import type {CreateEventOpts, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import {AbstractEventHandler} from "../ses/StaticEventProcessor.js";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 
 export class Followee {
     constructor(public pubkey: string, public relay?: string, public nickname?: string) {
@@ -58,7 +58,7 @@ export class Nip02FollowListEvent extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip01UserMetaDataEventHandler extends AbstractEventHandler<Nip02FollowListEvent> {
+export class Nip02FollowListEventHandler extends AbstractEventProcessor<Nip02FollowListEvent> {
     constructor(handler: (event: Nip02FollowListEvent) => void) {
         super(Nip02FollowListEvent.KIND, Nip02FollowListEvent.buildFromEvent, handler);
     }

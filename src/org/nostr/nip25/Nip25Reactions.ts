@@ -1,6 +1,6 @@
 import type {CreateEventOpts, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import {AbstractEventHandler} from "../ses/StaticEventProcessor.js";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 
 export class Nip25ReactionsEvent extends AbstractNipMiniEvent {
     public static KIND: number = 7;
@@ -36,7 +36,7 @@ export class Nip25ReactionsEvent extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip01UserMetaDataEventHandler extends AbstractEventHandler<Nip25ReactionsEvent> {
+export class Nip25ReactionsEventHandler extends AbstractEventProcessor<Nip25ReactionsEvent> {
     constructor(handler: (event: Nip25ReactionsEvent) => void) {
         super(Nip25ReactionsEvent.KIND, Nip25ReactionsEvent.buildFromEvent, handler);
     }

@@ -1,6 +1,6 @@
 import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent.js";
-import {AbstractEventHandler} from "../ses/StaticEventProcessor";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 import {Nip35TorrentEvent} from "../nip35/Nip35TorrentEvent";
 
 export class Nip78ArbitraryCustomAppData<T> extends AbstractNipMiniEvent {
@@ -41,7 +41,7 @@ export class Nip78ArbitraryCustomAppData<T> extends AbstractNipMiniEvent {
     }
 }
 
-export class Nip78ArbitraryCustomAppDataHandler<T> extends AbstractEventHandler<Nip78ArbitraryCustomAppData<T>> {
+export class Nip78ArbitraryCustomAppDataHandler<T> extends AbstractEventProcessor<Nip78ArbitraryCustomAppData<T>> {
     constructor(handler: (event: Nip78ArbitraryCustomAppData<T>) => void) {
         super(Nip78ArbitraryCustomAppData.KIND, Nip78ArbitraryCustomAppData.buildFromEvent, handler);
     }

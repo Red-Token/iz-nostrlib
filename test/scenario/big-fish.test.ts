@@ -21,7 +21,7 @@ import * as fs from "node:fs";
 import {DynamicSynchronisedSession} from "../../src/org/nostr/ses/DynamicSynchronisedSession";
 import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
-import {StaticEventProcessor} from "../../src/org/nostr/ses/StaticEventProcessor";
+import {StaticEventsProcessor} from "../../src/org/nostr/ses/StaticEventsProcessor";
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -85,7 +85,7 @@ describe('Async Test Example', () => {
         await wait(2000)
 
         // // Verify that stuff work
-        const readProfile = aliceGlobalNostrContext.profileService.nip01Map.get(aliceIdentity.pubkey)
+        const readProfile = aliceGlobalNostrContext.profileService.nip01Map.value.get(aliceIdentity.pubkey)
 
         expect(readProfile).to.not.be.null;
         // TODO FIX so that profile are the same in TS
@@ -99,7 +99,7 @@ describe('Async Test Example', () => {
 
         await wait(2000)
 
-        const rl = aliceGlobalNostrContext.profileService.nip65Map.get(aliceIdentity.pubkey)
+        const rl = aliceGlobalNostrContext.profileService.nip65Map.value.get(aliceIdentity.pubkey)
 
         // expect(aliceRelayList.relays).to.be.equal(rl?.relays)
         expect(rl).to.not.be.null;
@@ -137,8 +137,8 @@ describe('Async Test Example', () => {
 
         await wait(2000)
 
-        const bigFishReadProfileAlice = aliceGlobalNostrContext.profileService.nip01Map.get(bigFishIdentity.pubkey)
-        const bigFishReadProfileBigFish = bigFishGlobalNostrContext.profileService.nip01Map.get(bigFishIdentity.pubkey)
+        const bigFishReadProfileAlice = aliceGlobalNostrContext.profileService.nip01Map.value.get(bigFishIdentity.pubkey)
+        const bigFishReadProfileBigFish = bigFishGlobalNostrContext.profileService.nip01Map.value.get(bigFishIdentity.pubkey)
 
         const bigFishRelays = [normalizeRelayUrl('wss://relay.bf.lxc')]
         const nip65RelayListMetadataEvent = new Nip65RelayListMetadataEvent([bigFishRelays])
@@ -146,8 +146,8 @@ describe('Async Test Example', () => {
 
         await wait(2000)
 
-        const aliceViewOfNip01 = aliceGlobalNostrContext.profileService.nip01Map.get(bigFishIdentity.pubkey)
-        const aliceViewOfNip65 = aliceGlobalNostrContext.profileService.nip65Map.get(bigFishIdentity.pubkey)
+        const aliceViewOfNip01 = aliceGlobalNostrContext.profileService.nip01Map.value.get(bigFishIdentity.pubkey)
+        const aliceViewOfNip65 = aliceGlobalNostrContext.profileService.nip65Map.value.get(bigFishIdentity.pubkey)
 
         expect(aliceViewOfNip65).to.not.be.undefined;
         if (aliceViewOfNip65 === undefined) throw Error('')
@@ -158,7 +158,7 @@ describe('Async Test Example', () => {
         const aliceBigFishIdentity = aliceBigFishCommunityContext.createCommunityIdentity(aliceWSessionData)
         const aliceBigFishPublisher = new DynamicPublisher(aliceBigFishSession, aliceBigFishIdentity)
 
-        const aliceBigFishEventProcessor = new StaticEventProcessor([
+        const aliceBigFishEventProcessor = new StaticEventsProcessor([
             new Nip35TorrentEventHandler((event: Nip35TorrentEvent) => {
                     console.log(event)
                 }

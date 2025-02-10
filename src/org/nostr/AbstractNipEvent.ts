@@ -16,11 +16,14 @@ export abstract class AbstractNipMiniEvent extends AbstractNipMiniMiniEvent {
     }
 
     abstract get kind(): number
-
     abstract get opts(): CreateEventOpts
 
     get created_at(): number {
-        return this.event === undefined ? -1 : this.event.created_at
+        return this.event?.created_at ?? -1
+    }
+
+    get pubkey(): string {
+        return this.event?.pubkey ?? ''
     }
 }
 

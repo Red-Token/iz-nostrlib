@@ -1,15 +1,20 @@
 import {AbstractNipMiniEvent} from "../AbstractNipEvent.js";
 import type {TrustedEvent} from "@welshman/util";
 
-export class AbstractEventHandler<T extends AbstractNipMiniEvent> {
-    constructor(public readonly kind: number, public readonly builder: (event: TrustedEvent) => T, public readonly handler: (event: T) => void) {
+export class AbstractEventProcessor<T extends AbstractNipMiniEvent> {
+    public readonly handler: (event: AbstractNipMiniEvent) => void
+    constructor(
+        public readonly kind: number,
+        public readonly builder: (event: TrustedEvent) => T,
+        handler: (event: T) => void) {
+        this.handler = handler as (event: AbstractNipMiniEvent) => void;
     }
 }
 
-export class StaticEventProcessor<T extends AbstractNipMiniEvent > {
-    public readonly eventHandlerMap = new Map<number, AbstractEventHandler<T>>()
+export class StaticEventsProcessor<T extends AbstractNipMiniEvent> {
+    public readonly eventHandlerMap = new Map<number, AbstractEventProcessor<T>>()
 
-    constructor(eventHandlers: AbstractEventHandler<T>[]) {
+    constructor(eventHandlers: AbstractEventProcessor<T>[]) {
         eventHandlers.forEach(eventHandler => {
             this.eventHandlerMap.set(eventHandler.kind, eventHandler);
         })

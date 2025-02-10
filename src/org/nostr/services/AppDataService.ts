@@ -5,7 +5,7 @@ import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
 import {DynamicSubscription} from "../ses/DynamicSubscription.js";
 import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData.js";
 import {updateIfNewer} from "../util/scraps.js";
-import {StaticEventProcessor} from "../ses/StaticEventProcessor.js";
+import {StaticEventsProcessor} from "../ses/StaticEventsProcessor";
 
 function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
     let element = map.get(key);
@@ -25,7 +25,7 @@ export class AppDataService extends DynamicSynchronisedSession {
     constructor(context: AbstractNostrContext) {
         super(context.relays)
 
-        const eventProcessor = new StaticEventProcessor([
+        const eventProcessor = new StaticEventsProcessor([
             new Nip78ArbitraryCustomAppDataHandler((event: Nip78ArbitraryCustomAppData<any>) => {
                 updateIfNewer(event, event.app,
                     getOrCreate<string, string, Nip78ArbitraryCustomAppData<any>>(event.event?.pubkey!, this.appDataMap))
