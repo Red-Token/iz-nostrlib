@@ -11,7 +11,7 @@ import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
-import {Follow, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
+import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
 import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {expect} from "chai";
 import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext";

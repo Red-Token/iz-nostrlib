@@ -1,6 +1,6 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Library that support Nostr messages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,6 +26,7 @@
     "chai": "^5.1.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
+    "ssh2": "^1.16.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
@@ -50,7 +51,6 @@
     "deepmerge": "^4.3.1",
     "mitt": "^3.0.1",
     "node-ssh": "^13.2.0",
-    "nostr-tools": "^2.10.3",
-    "ssh2": "^1.16.0"
+    "nostr-tools": "^2.10.3"
   }
 }

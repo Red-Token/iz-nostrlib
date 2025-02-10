@@ -1,13 +1,8 @@
-import {SignerData, SynchronisedSession} from "../ses/SynchronisedSession.js";
-import {Publisher} from "../ses/Publisher.js";
+import {SignerData} from "../ses/SynchronisedSession.js";
 import {Subscription} from "../ses/Subscription.js";
-import {Follow, Nip02FollowListEvent, Nip02FollowListEventBuilder} from "../nip02/Nip02FollowListEvent.js";
-import {Nip35TorrentEvent, Nip35TorrentEventBuilder} from "../nip35/Nip35TorrentEvent.js";
-import {EventType} from "../ses/SynchronisedEventStream.js";
-import {TrustedEvent} from "@welshman/util";
-import mitt from "mitt";
+import {Followee} from "../nip02/Nip02FollowListEvent.js";
+import {Nip35TorrentEvent} from "../nip35/Nip35TorrentEvent.js";
 import {Nip01UserMetaDataEvent} from "../nip01/Nip01UserMetaData.js";
-import {ProfileService} from "../services/ProfileService.js";
 import {NostrClient} from "../client/NostrClient.js";
 import {addSession, getSigner, Session} from "@welshman/app";
 import {Nip01Signer, Nip07Signer, Nip46Signer, Nip55Signer} from "@welshman/signer";
@@ -49,72 +44,73 @@ export class Identity {
 }
 
 export class CommunityIdentity extends Identity {
-    followList: Follow[] = []
-    private readonly followSession: SynchronisedSession
+    followList: Followee[] = []
+    // private readonly followSession: SynchronisedSession
     private followSubscriptions: Subscription[] = []
     private notificationSubscriptions: Subscription[] = []
-    public readonly pubkey: string
+    // public readonly pubkey: string
 
-    public followPublisher: Publisher;
+    // public followPublisher: Publisher;
 
     constructor(public readonly community: CommunityNostrContext, data: WelshmanSessionData) {
         super(data)
-        this.pubkey = data.pubkey
+        // this.pubkey = data.pubkey
         this.community.identities.set(this.pubkey, this)
 
-        this.followSession = new SynchronisedSession(community.relays.value);
-        this.followPublisher = new Publisher(this.followSession, this)
-        this.followSession.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
-            if (event.kind === Nip02FollowListEvent.KIND) {
-                const followListEvent = new Nip02FollowListEventBuilder(event).build();
-                this.followList = followListEvent.list
-
-                // Update the notification of publications
-                for (const ns of this.notificationSubscriptions)
-                    ns.unsubscribe()
-
-                this.notificationSubscriptions = []
-
-                const authors = [...this.followList.map(follow => {
-                    return follow.pubkey
-                })]
-
-                // we do nothing if the list is empty
-                if (authors.length == 0)
-                    return
-
-                for (const relay of community.relays.value) {
-                    const sub = new Subscription(
-                        this.community.notificationSession,
-                        [{kinds: [Nip35TorrentEvent.KIND], authors}],
-                        // [{kinds: [Nip35TorrentEvent.KIND]}],
-                        [relay])
-
-                    this.notificationSubscriptions.push(sub)
-                }
-
-                return
-            }
-
-            throw new Error("Unable to find any notification session")
-        })
+        // TODO: Create a follow Service
+        // this.followSession = new SynchronisedSession(community.relays.value);
+        // this.followPublisher = new Publisher(this.followSession, this)
+        // this.followSession.eventStream.emitter.on(EventType.DISCOVERED, (event: TrustedEvent) => {
+        //     if (event.kind === Nip02FollowListEvent.KIND) {
+        //         const followListEvent = new Nip02FollowListEventBuilder(event).build();
+        //         this.followList = followListEvent.list
+        //
+        //         // Update the notification of publications
+        //         for (const ns of this.notificationSubscriptions)
+        //             ns.unsubscribe()
+        //
+        //         this.notificationSubscriptions = []
+        //
+        //         const authors = [...this.followList.map(follow => {
+        //             return follow.pubkey
+        //         })]
+        //
+        //         // we do nothing if the list is empty
+        //         if (authors.length == 0)
+        //             return
+        //
+        //         for (const relay of community.relays.value) {
+        //             const sub = new Subscription(
+        //                 this.community.notificationSession,
+        //                 [{kinds: [Nip35TorrentEvent.KIND], authors}],
+        //                 // [{kinds: [Nip35TorrentEvent.KIND]}],
+        //                 [relay])
+        //
+        //             this.notificationSubscriptions.push(sub)
+        //         }
+        //
+        //         return
+        //     }
+        //
+        //     throw new Error("Unable to find any notification session")
+        // })
 
         // Create a subscription for populate the followList
-        for (const relay of community.relays.value) {
-            this.followSubscriptions.push(new Subscription(
-                this.followSession,
-                [{kinds: [Nip02FollowListEvent.KIND], authors: [this.pubkey]}],
-                [relay]))
-        }
+        // for (const relay of community.relays.value) {
+        //     this.followSubscriptions.push(new Subscription(
+        //         this.followSession,
+        //         [{kinds: [Nip02FollowListEvent.KIND], authors: [this.pubkey]}],
+        //         [relay]))
+        // }
     }
 
     discard(): void {
         this.followSubscriptions.forEach(subscription => {
-            subscription.unsubscribe()
+            // subscription.unsubscribe()
         })
         this.followSubscriptions = []
         this.notificationSubscriptions.forEach(subscription => {
-            subscription.unsubscribe()
+            // subscription.unsubscribe()
         })
         this.notificationSubscriptions = []
         this.community.identities.delete(this.pubkey)

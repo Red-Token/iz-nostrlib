@@ -121,3 +121,9 @@ export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
         }
     }
 }
+
+export class Nip35TorrentEventCommentsHandler extends AbstractEventHandler<Nip35TorrentEventComments> {
+    constructor(handler: (event: Nip35TorrentEventComments) => void) {
+        super(Nip35TorrentEventComments.KIND, Nip35TorrentEventComments.buildFromEvent, handler);
+    }
+}

@@ -4,7 +4,9 @@ import {
     safeFindOptionalMultiTagValues,
     safeFindOptionalSingleTagValue
 } from "../AbstractNipEvent.js";
-import {NostrUserProfileMetaData} from "./NostrUserProfileMetaData";
+import {NostrUserProfileMetaData} from "./NostrUserProfileMetaData.js";
+import {AbstractEventHandler} from "../ses/StaticEventProcessor";
+import {Nip78ArbitraryCustomAppData} from "../nip78/Nip78ArbitraryCustomAppData";
 
 export enum UserType {
     INDIVIDUAL = "individual",
@@ -65,3 +67,10 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
         }
     }
 }
+
+export class Nip01UserMetaDataEventHandler extends AbstractEventHandler<Nip01UserMetaDataEvent> {
+    constructor(handler: (event: Nip01UserMetaDataEvent) => void) {
+        super(Nip01UserMetaDataEvent.KIND, Nip01UserMetaDataEvent.buildFromEvent, handler);
+    }
+}
+

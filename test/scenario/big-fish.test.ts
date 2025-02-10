@@ -19,11 +19,8 @@ import {AppNostrContext} from "../../src/org/nostr/communities/AppNostrContext";
 import {Client} from 'ssh2';
 import * as fs from "node:fs";
 import {DynamicSynchronisedSession} from "../../src/org/nostr/ses/DynamicSynchronisedSession";
-import {updateIfNewer} from "../../src/org/nostr/util/scraps";
-import {AbstractEventHandler} from "../../src/org/nostr/services/AppDataService";
 import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
-import {AbstractNipMiniEvent} from "../../src/org/nostr/AbstractNipEvent";
 import {StaticEventProcessor} from "../../src/org/nostr/ses/StaticEventProcessor";
 
 

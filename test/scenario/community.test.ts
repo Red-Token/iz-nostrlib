@@ -5,7 +5,7 @@ import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
-import {Follow, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
+import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
 import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {expect} from "chai";
 
@@ -104,7 +104,7 @@ describe('Async Test Example', () => {
 
             ci.profilePublisher.publish(Nip01UserMetaDataEvent.KIND, new Nip01UserMetaDataEvent(profile).createTemplate())
 
-            const eventTemplate = new Nip02FollowListEvent([...ci.followList, new Follow(alicePubkey)])
+            const eventTemplate = new Nip02FollowListEvent([...ci.followList, new Followee(alicePubkey)])
             ci.followPublisher.publish(Nip02FollowListEvent.KIND, eventTemplate.createTemplate())
         }
 
