@@ -1,10 +1,9 @@
-import {createEvent, CreateEventOpts} from "@welshman/util";
+import {createEvent} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
-import {SynchronisedSession} from "./SynchronisedSession.js";
-import {Identity, CommunityIdentity} from "../communities/CommunityNostrContext";
 import {own} from "@welshman/signer";
 import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession";
 import {AbstractNipMiniEvent} from "../AbstractNipEvent";
+import {Identity} from "../communities/Identity";
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession

@@ -1,13 +1,13 @@
 import type {TrustedEvent} from "@welshman/util";
 import {EventType} from "../ses/SynchronisedEventStream.js";
-import {AbstractNostrContext} from "../communities/AbstractNostrContext.js";
-import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
 import {DynamicSubscription} from "../ses/DynamicSubscription.js";
 import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData.js";
 import {updateIfNewer} from "../util/scraps.js";
 import {StaticEventsProcessor} from "../ses/StaticEventsProcessor";
+import {AppNostrContext, collectRelaysFromIdentities} from "../communities/AppNostrContext";
+import {AbstractService} from "./AbstractService";
 
-function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
+export function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
     let element = map.get(key);
 
     if (element == undefined) {
@@ -18,12 +18,11 @@ function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
     return element;
 }
 
-
-export class AppDataService extends DynamicSynchronisedSession {
+export class AppDataService extends AbstractService {
     appDataMap = new Map<string, Map<string, Nip78ArbitraryCustomAppData<any>>>()
 
-    constructor(context: AbstractNostrContext) {
-        super(context.relays)
+    constructor(context: AppNostrContext) {
+        super(context)
 
         const eventProcessor = new StaticEventsProcessor([
             new Nip78ArbitraryCustomAppDataHandler((event: Nip78ArbitraryCustomAppData<any>) => {
@@ -36,19 +35,26 @@ export class AppDataService extends DynamicSynchronisedSession {
             eventProcessor.processEvent(event)
         })
 
-        context.identities.addListener((keys) => {
+        const recalibrate = () => {
+            this.context.relays.value = collectRelaysFromIdentities(context.parentContext, context.identities.value)
+
+            const kinds = Array.from(eventProcessor.eventHandlerMap.keys())
             const authors = Array.from(context.identities.value.keys())
 
-            // close down any subscriptions that do not match the authors
-            this.subscriptions.filter((subscription) => {
-                return subscription.filters.find(filter => filter.authors !== authors)
-            }).forEach((subscription) => {
-                //TODO: Check here
-                subscription.filters = subscription.filters.map(filter => {
-                    filter.authors = authors
-                    return filter
-                })
-            })
+            // Terminate all session that have the incorrect author
+            for (const sub of this.subscriptions) {
+                sub.filters = [{kinds, authors}]
+            }
+        }
+
+        context.parentContext.profileService.nip65Map.addListener((keys) => {
+            console.log("THESE KEYS GOT UPDATED" + keys)
+            recalibrate()
+        })
+
+        context.identities.addListener((keys) => {
+            console.log("THESE KEYS GOT UPDATED2" + keys)
+            recalibrate()
         })
 
         // Activate dynamic subscription
@@ -58,4 +64,9 @@ export class AppDataService extends DynamicSynchronisedSession {
                 [{kinds: [kind], authors: []}])
         }
     }
+
+    getAppData(appName: string, pubkey: string) {
+        getOrCreate(pubkey,this.appDataMap)
+    }
+
 }

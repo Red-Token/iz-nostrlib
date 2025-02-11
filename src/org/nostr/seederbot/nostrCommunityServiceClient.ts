@@ -1,16 +1,17 @@
 import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents";
-import {CommunityIdentity, CommunityNostrContext} from "../communities/CommunityNostrContext";
+import {CommunityNostrContext} from "../communities/CommunityNostrContext";
 import {Subscription} from "../ses/Subscription.js";
 import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
 import {DynamicSubscription} from "../ses/DynamicSubscription";
 import {DynamicPublisher} from "../ses/DynamicPublisher";
+import {Identity} from "../communities/Identity";
 
 export class NostrCommunityServiceClient {
     public session: DynamicSynchronisedSession
     public subscriptions: Subscription[] = []
     public publisher: DynamicPublisher
 
-    constructor(public community: CommunityNostrContext, public communityIdentity: CommunityIdentity) {
+    constructor(public community: CommunityNostrContext, public communityIdentity: Identity) {
         this.session = new DynamicSynchronisedSession(community.relays)
 
         const nowInSeconds = Math.floor(Date.now() / 1000);

@@ -1,6 +1,6 @@
 import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
 import {setContext} from "@welshman/lib";
-import {asyncCreateWelshmanSession, CommunityNostrContext, NotificationEventType} from "../../src/org/nostr/communities/CommunityNostrContext";
+import {CommunityNostrContext, NotificationEventType} from "../../src/org/nostr/communities/CommunityNostrContext";
 import {normalizeRelayUrl} from "@welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData";
@@ -8,6 +8,7 @@ import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfi
 import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
 import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {expect} from "chai";
+import {asyncCreateWelshmanSession} from "../../src/org/nostr/communities/Identity";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 

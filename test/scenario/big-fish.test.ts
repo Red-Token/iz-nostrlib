@@ -5,9 +5,7 @@ import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
 import {
-    asyncCreateWelshmanSession,
-    CommunityNostrContext,
-    Identity
+    CommunityNostrContext
 } from "../../src/org/nostr/communities/CommunityNostrContext";
 import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
 import {setContext} from "@welshman/lib";
@@ -22,6 +20,7 @@ import {DynamicSynchronisedSession} from "../../src/org/nostr/ses/DynamicSynchro
 import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
 import {StaticEventsProcessor} from "../../src/org/nostr/ses/StaticEventsProcessor";
+import {asyncCreateWelshmanSession, Identifier, Identity} from "../../src/org/nostr/communities/Identity";
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -73,9 +72,10 @@ describe('Async Test Example', () => {
         const aliceNSec = 'nsec18c4t7czha7g7p9cm05ve4gqx9cmp9w2x6c06y6l4m52jrry9xp7sl2su9x'
         const aliceSignerData: SignerData = {type: SignerType.NIP01, nsec: aliceNSec}
         const aliceWSessionData = await asyncCreateWelshmanSession(aliceSignerData)
-        const aliceIdentity = new Identity(aliceWSessionData)
+        const aliceIdentifier = new Identifier(aliceWSessionData)
 
         const aliceGlobalNostrContext = new GlobalNostrContext(relays)
+        const aliceIdentity = new Identity(aliceGlobalNostrContext, aliceIdentifier)
         const aliceGlobalDynamicPublisher = new DynamicPublisher(aliceGlobalNostrContext.profileService, aliceIdentity)
 
         // Update Alice profile
@@ -107,14 +107,20 @@ describe('Async Test Example', () => {
 
         //Publish App data
         class TestAppData {
-            constructor(public zool: string = 'isCool!', public counts: number = 123) {
+            constructor(
+                public zool: string = 'isCool!',
+                public counts: number = 123,
+                public communities: {
+                    key: string,
+                    ids: string[],
+                }[] = []) {
             }
         }
 
         const appName = 'testApp'
         const appDataEvent = new Nip78ArbitraryCustomAppData<TestAppData>(new TestAppData(), appName)
 
-        const aliceAppContext = new AppNostrContext(rl?.relays.map(relay => relay[0]) ?? [])
+        const aliceAppContext = new AppNostrContext(aliceGlobalNostrContext)
         aliceAppContext.identities.set(aliceIdentity.pubkey, aliceIdentity)
         const aliceAppPublisher = new DynamicPublisher(aliceAppContext.appDataService, aliceIdentity)
         aliceAppPublisher.publish(appDataEvent)
@@ -127,9 +133,8 @@ describe('Async Test Example', () => {
 
         const bigFishNSec = 'nsec16lc2cn2gzgf3vcv20lwkqquprqujpkq9pj0wcxmnw8scxh6j0yrqlc9ae0'
         const bigFishSignerData: SignerData = {type: SignerType.NIP01, nsec: bigFishNSec}
-        const bigFishIdentity = new Identity(await asyncCreateWelshmanSession(bigFishSignerData))
-
         const bigFishGlobalNostrContext = new GlobalNostrContext(relays)
+        const bigFishIdentity = new Identity(bigFishGlobalNostrContext, new Identifier(await asyncCreateWelshmanSession(bigFishSignerData)))
         const bigFishGlobalDynamicPublisher = new DynamicPublisher(bigFishGlobalNostrContext.profileService, bigFishIdentity)
 
         const bigFishMetaDataEvent = new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Big Fish', 'A fishing community in Michigan'), UserType.COMMUNITY, [['nip29'], ['nip35'], ['nip71']])
@@ -153,9 +158,33 @@ describe('Async Test Example', () => {
         if (aliceViewOfNip65 === undefined) throw Error('')
 
         // Alice joins Big Fish and publishes a video of her fishing
-        const aliceBigFishCommunityContext = new CommunityNostrContext("Big Fish", aliceViewOfNip65.relays.map(relay => relay[0]))
+
+        // First she updates her appdata
+
+        const aliceBigFishCommunityContext = new CommunityNostrContext(bigFishIdentity.pubkey, aliceGlobalNostrContext)
+        const aliceBigFishIdentity = new Identity(aliceBigFishCommunityContext, aliceIdentifier)
+
+        // // Alice creates a profile over at BigFish
+        // aliceBigFishIdentity.publisher.publish(new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Alice the great fisher')))
+
+        await wait(2000)
+
+        const readTestAppData = aliceAppContext.appDataService.appDataMap.get(aliceIdentifier.pubkey)?.get(appName)?.data as TestAppData ?? new TestAppData()
+
+        expect(readTestAppData).to.not.be.undefined;
+        expect(readTestAppData.communities.length).to.equal(0)
+
+        readTestAppData.communities.push({key: bigFishIdentity.pubkey, ids: [aliceIdentity.pubkey]})
+        aliceAppPublisher.publish(new Nip78ArbitraryCustomAppData(readTestAppData, appName))
+
+        await wait(2000)
+
+        const readTestAppData2 = aliceAppContext.appDataService.appDataMap.get(aliceIdentifier.pubkey)?.get(appName)?.data as TestAppData ?? new TestAppData()
+
+        expect(readTestAppData2).to.not.be.undefined;
+        expect(readTestAppData2.communities.length).to.equal(1)
+
         const aliceBigFishSession = new DynamicSynchronisedSession(aliceBigFishCommunityContext.relays)
-        const aliceBigFishIdentity = aliceBigFishCommunityContext.createCommunityIdentity(aliceWSessionData)
         const aliceBigFishPublisher = new DynamicPublisher(aliceBigFishSession, aliceBigFishIdentity)
 
         const aliceBigFishEventProcessor = new StaticEventsProcessor([

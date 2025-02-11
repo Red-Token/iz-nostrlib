@@ -1,8 +1,6 @@
 import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
 import {setContext} from "@welshman/lib";
 import {
-    Identity,
-    asyncCreateWelshmanSession,
     CommunityNostrContext,
     CommunityIdentity,
     NotificationEventType
@@ -19,6 +17,7 @@ import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
 import {generateSecretKey} from "nostr-tools";
 import {getPublicKey, nip19} from "nostr-tools";
 import {Nip65RelayListMetadataEvent} from "../../src/org/nostr/nip65/Nip65RelayListMetadata";
+import {asyncCreateWelshmanSession, Identity} from "../../src/org/nostr/communities/Identity";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 

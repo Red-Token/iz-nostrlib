@@ -5,10 +5,8 @@ import {DynamicPublisher} from "../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent} from "../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../src/org/nostr/nip01/NostrUserProfileMetaData";
 import {
-    asyncCreateWelshmanSession,
     CommunityNostrContext,
-    CommunityIdentity,
-    Identity
+    CommunityIdentity
 } from "../src/org/nostr/communities/CommunityNostrContext";
 
 import {Subscription} from "../src";
@@ -19,6 +17,7 @@ import {expect} from "chai";
 import {Nip65RelayListMetadataEvent} from "../src/org/nostr/nip65/Nip65RelayListMetadata";
 import {Nip78ArbitraryCustomAppData} from "../src/org/nostr/nip78/Nip78ArbitraryCustomAppData";
 import {AppNostrContext} from "../src/org/nostr/communities/AppNostrContext";
+import {asyncCreateWelshmanSession, Identity} from "../src/org/nostr/communities/Identity";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
