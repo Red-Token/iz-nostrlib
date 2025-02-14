@@ -1,5 +1,5 @@
 import {AbstractNostrContext} from "./AbstractNostrContext.js";
-import {ProfileService} from "../services/ProfileService";
+import {ProfileService} from "../services/ProfileService.js";
 import {normalizeRelayUrl} from "@welshman/util";
 
 /**

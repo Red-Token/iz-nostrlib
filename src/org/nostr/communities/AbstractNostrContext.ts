@@ -1,6 +1,5 @@
 import {ReactiveArray} from "../util/ReactiveArray.js";
 import {ReactiveMap} from "../util/ReactiveMap.js";
-import {ProfileService} from "../services/ProfileService.js";
 import {Identity} from "./Identity.js";
 import {AbstractService} from "../services/AbstractService";
 

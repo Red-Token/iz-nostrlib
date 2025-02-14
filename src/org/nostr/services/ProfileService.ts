@@ -7,8 +7,8 @@ import {Nip65RelayListMetadataEvent, Nip65RelayListMetadataEventHandler} from ".
 import {AbstractNipMiniEvent} from "../AbstractNipEvent.js";
 import {ReactiveMap} from "../util/ReactiveMap.js";
 import {StaticEventsProcessor} from "../ses/StaticEventsProcessor.js";
-import {Nip02FollowListEvent, Nip02FollowListEventHandler} from "../nip02/Nip02FollowListEvent";
-import {AbstractService} from "./AbstractService";
+import {Nip02FollowListEvent, Nip02FollowListEventHandler} from "../nip02/Nip02FollowListEvent.js";
+import {AbstractService} from "./AbstractService.js";
 
 function createMapEventHandler<T extends AbstractNipMiniEvent>(map: ReactiveMap<string, T>) {
     return (event: T): void => {

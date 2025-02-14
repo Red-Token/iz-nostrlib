@@ -1,4 +1,4 @@
-import {EventType, SignerData, SignerType} from '../../src'
+import {EventType, Followee, Nip02FollowListEvent, SignerData, SignerType} from '../../src'
 import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
 import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext";
 import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
@@ -21,6 +21,7 @@ import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/n
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
 import {StaticEventsProcessor} from "../../src/org/nostr/ses/StaticEventsProcessor";
 import {asyncCreateWelshmanSession, Identifier, Identity} from "../../src/org/nostr/communities/Identity";
+import {generateSecretKey, nip19} from "nostr-tools";
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -81,6 +82,8 @@ describe('Async Test Example', () => {
         // Update Alice profile
         const aliceMetaDataEvent = new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Alice', 'The Queen of Tests', 'alice.jpg'))
         aliceGlobalDynamicPublisher.publish(aliceMetaDataEvent)
+
+
 
         await wait(2000)
 
@@ -203,6 +206,33 @@ describe('Async Test Example', () => {
         aliceBigFishPublisher.publish(new Nip35TorrentEvent('My Fish', '1234567890', 'My nice fish'))
 
         await wait(2000)
+
+        const bobNSec = 'nsec1zsp48upz3vd64lwhx7me8utrxyfxuzdwvxhfld2q0ehs0ya9mlxs47v64q'
+        const bobSignerData: SignerData = {type: SignerType.NIP01, nsec: bobNSec}
+
+        const bobWSessionData = await asyncCreateWelshmanSession(bobSignerData)
+        const bobIdentifier = new Identifier(bobWSessionData)
+
+        const bobGlobalNostrContext = new GlobalNostrContext(relays)
+        const bobIdentity = new Identity(bobGlobalNostrContext, bobIdentifier)
+        const bobGlobalDynamicPublisher = new DynamicPublisher(bobGlobalNostrContext.profileService, bobIdentity)
+
+        // Update Alice profile
+        const bobMetaDataEvent = new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Bob', 'The King of Tests', 'bob.jpg'))
+        bobGlobalDynamicPublisher.publish(bobMetaDataEvent)
+
+        // Bob adds Alice to his list
+        const f = new Followee(aliceIdentity.pubkey, '', 'Alice')
+
+        const xs = bobGlobalNostrContext.profileService.nip02Map.value.get(bobIdentifier.pubkey)?.list ?? []
+        xs.push(f)
+        const n = new Nip02FollowListEvent(xs)
+        bobGlobalDynamicPublisher.publish(n)
+
+        await wait(2000)
+
+        // // Verify that stuff work
+        const readProfile2 = bobGlobalNostrContext.profileService.nip01Map.value.get(bobIdentity.pubkey)
 
         console.log("THE END!")
     });

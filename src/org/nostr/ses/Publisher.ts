@@ -1,8 +1,8 @@
 import {createEvent, CreateEventOpts} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
 import {SynchronisedSession} from "./SynchronisedSession.js";
-import {CommunityIdentity} from "../communities/CommunityNostrContext";
 import {own} from "@welshman/signer";
+import {Identity} from "../communities/Identity";
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession
@@ -13,7 +13,7 @@ import {own} from "@welshman/signer";
  *
  */
 export class Publisher {
-    constructor(readonly session: SynchronisedSession, private comminityIdentiy: CommunityIdentity) {
+    constructor(readonly session: SynchronisedSession, private comminityIdentiy: Identity) {
     }
 
     publish(kind: number, payload: CreateEventOpts) {
