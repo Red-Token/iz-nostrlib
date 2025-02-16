@@ -1,11 +1,9 @@
-import {SignerData} from "../ses/SynchronisedSession";
-import {NostrClient} from "../client/NostrClient";
+// import {SignerData} from "../ses/SynchronisedSession";
+import {NostrClient} from "../client/NostrClient.js";
 import {addSession, getSigner, Session} from "@welshman/app";
 import {Nip01Signer, Nip07Signer, Nip46Signer, Nip55Signer} from "@welshman/signer";
-import {AbstractNostrContext} from "./AbstractNostrContext";
-import {DynamicPublisher} from "../ses/DynamicPublisher";
-import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
-import {GlobalNostrContext} from "./GlobalNostrContext";
+import {AbstractNostrContext} from "./AbstractNostrContext.js";
+import {SignerData} from "../ses/DynamicSynchronisedSession.js";
 
 export type WelshmanSessionData = {
     wSession: Session,
