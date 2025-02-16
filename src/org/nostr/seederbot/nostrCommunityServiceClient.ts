@@ -1,4 +1,4 @@
-import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents";
+import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents.js";
 import {CommunityNostrContext} from "../communities/CommunityNostrContext.js";
 import {Subscription} from "../ses/Subscription.js";
 import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
