@@ -16,7 +16,7 @@ export class GlobalNostrContext extends AbstractNostrContext {
 
             const relays = [...GlobalNostrContext.startUrls.map((url) => normalizeRelayUrl(url))]
 
-            new GlobalNostrContext(relays)
+            GlobalNostrContext._instance = new GlobalNostrContext(relays)
         }
 
         return GlobalNostrContext._instance
