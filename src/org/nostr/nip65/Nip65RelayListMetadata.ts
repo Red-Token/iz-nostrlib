@@ -1,7 +1,6 @@
 import {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
-import {Nip35TorrentEventComments} from "../nip35/Nip35TorrentEvent";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 
 export enum RelayType {
     READ = 'read',

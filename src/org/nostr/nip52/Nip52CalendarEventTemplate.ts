@@ -1,5 +1,4 @@
 import {HashedEvent, TrustedEvent} from "@welshman/util";
-import {ms} from "@welshman/lib";
 
 function getISO8601Date(date: Date) {
     return date.toISOString().split('T')[0]

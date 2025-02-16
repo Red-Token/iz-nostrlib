@@ -1,10 +1,10 @@
 import {Nip9999SeederTorrentTransformationResponseEvent} from "./Nip9999SeederControllEvents";
-import {CommunityNostrContext} from "../communities/CommunityNostrContext";
+import {CommunityNostrContext} from "../communities/CommunityNostrContext.js";
 import {Subscription} from "../ses/Subscription.js";
-import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
-import {DynamicSubscription} from "../ses/DynamicSubscription";
-import {DynamicPublisher} from "../ses/DynamicPublisher";
-import {Identity} from "../communities/Identity";
+import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
+import {DynamicSubscription} from "../ses/DynamicSubscription.js";
+import {DynamicPublisher} from "../ses/DynamicPublisher.js";
+import {Identity} from "../communities/Identity.js";
 
 export class NostrCommunityServiceClient {
     public session: DynamicSynchronisedSession

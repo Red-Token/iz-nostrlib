@@ -2,7 +2,7 @@ import {createEvent, CreateEventOpts} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
 import {SynchronisedSession} from "./SynchronisedSession.js";
 import {own} from "@welshman/signer";
-import {Identity} from "../communities/Identity";
+import {Identity} from "../communities/Identity.js";
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession

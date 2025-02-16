@@ -5,7 +5,7 @@ import {
     safeFindOptionalSingleTagValue
 } from "../AbstractNipEvent.js";
 import {NostrUserProfileMetaData} from "./NostrUserProfileMetaData.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 
 export enum UserType {
     INDIVIDUAL = "individual",

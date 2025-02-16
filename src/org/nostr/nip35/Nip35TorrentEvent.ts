@@ -5,7 +5,7 @@ import {
     safeFindOptionalMultiTagValues,
     safeFindSingleTagValue
 } from "../AbstractNipEvent.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 
 export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     public static KIND: number = 2003;
