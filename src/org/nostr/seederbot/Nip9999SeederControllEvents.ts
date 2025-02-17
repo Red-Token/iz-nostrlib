@@ -1,10 +1,12 @@
 import {type CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
 import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent.js";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
+import {Nip35TorrentEvent} from "../nip35/Nip35TorrentEvent";
 
 export class Nip9999SeederTorrentTransformationRequestEvent extends AbstractNipMiniEvent {
     static KIND: number = 9999;
 
-    static build(event: HashedEvent) {
+    static buildFromEvent(event: HashedEvent) {
 
         return new Nip9999SeederTorrentTransformationRequestEvent(
             safeFindSingleTagValue(event, 'p'),
@@ -78,3 +80,16 @@ export class Nip9999SeederTorrentTransformationResponseEvent extends AbstractNip
         }
     }
 }
+
+export class Nip9999SeederTorrentTransformationRequestEventHandler extends AbstractEventProcessor<Nip9999SeederTorrentTransformationRequestEvent> {
+    constructor(handler: (event: Nip9999SeederTorrentTransformationRequestEvent) => void) {
+        super(Nip9999SeederTorrentTransformationRequestEvent.KIND, Nip9999SeederTorrentTransformationRequestEvent.buildFromEvent, handler);
+    }
+}
+
+export class Nip9999SeederTorrentTransformationResponseEventHandler extends AbstractEventProcessor<Nip9999SeederTorrentTransformationResponseEvent> {
+    constructor(handler: (event: Nip9999SeederTorrentTransformationResponseEvent) => void) {
+        super(Nip9999SeederTorrentTransformationResponseEvent.KIND, Nip9999SeederTorrentTransformationResponseEvent.buildFromEvent, handler);
+    }
+}
+
