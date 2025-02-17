@@ -217,7 +217,7 @@ describe('Alice uploads a movie to Big Fish', () => {
         const bobIdentity = new Identity(bobGlobalNostrContext, bobIdentifier)
         const bobGlobalDynamicPublisher = new DynamicPublisher(bobGlobalNostrContext.profileService, bobIdentity)
 
-        // Update Alice profile
+        // Update Bobs profile
         const bobMetaDataEvent = new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Bob', 'The King of Tests', 'bob.jpg'))
         bobGlobalDynamicPublisher.publish(bobMetaDataEvent)
 

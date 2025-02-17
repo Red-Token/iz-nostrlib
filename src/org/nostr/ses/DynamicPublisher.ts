@@ -1,4 +1,4 @@
-import {createEvent} from "@welshman/util";
+import {createEvent, OwnedEvent} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
 import {own} from "@welshman/signer";
 import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession.js";
@@ -17,12 +17,18 @@ export class DynamicPublisher {
     constructor(readonly session: DynamicSynchronisedSession, private identity: Identity) {
     }
 
-    publish(event: AbstractNipMiniEvent) {
+    prepare(event: AbstractNipMiniEvent): OwnedEvent {
+        return own(createEvent(event.kind, event.opts), this.identity.pubkey)
+    }
 
-        // Sent the message
+    send(event: OwnedEvent) {
         return publishThunk({
-            event: own(createEvent(event.kind, event.opts), this.identity.pubkey),
+            event: event,
             relays: this.session.relays.value,
         })
+    }
+
+    publish(event: AbstractNipMiniEvent) {
+        return this.send(this.prepare(event))
     }
 }
