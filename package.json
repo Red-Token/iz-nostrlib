@@ -1,19 +1,92 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.1.15-snapshot.5",
+  "version": "0.1.15-snapshot.6",
   "description": "Library that support Nostr messages",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
+  "require": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./nips": {
+      "require": "./dist/org/nostr/nips/index.cjs",
+      "import": "./dist/org/nostr/nips/index.mjs",
+      "types": "./dist/org/nostr/nips/index.d.ts"
+    },
+    "./communities": {
+      "require": "./dist/org/nostr/communities/index.cjs",
+      "import": "./dist/org/nostr/communities/index.mjs",
+      "types": "./dist/org/nostr/communities/index.d.ts"
+    },
+    "./ses": {
+      "require": "./dist/org/nostr/ses/index.cjs",
+      "import": "./dist/org/nostr/ses/index.mjs",
+      "types": "./dist/org/nostr/ses/index.d.ts"
+    },
+    "./seederbot": {
+      "require": "./dist/org/nostr/seederbot/index.cjs",
+      "import": "./dist/org/nostr/seederbot/index.mjs",
+      "types": "./dist/org/nostr/seederbot/index.d.ts"
+    },
+    "./util": {
+      "require": "./dist/org/nostr/util/index.cjs",
+      "import": "./dist/org/nostr/util/index.mjs",
+      "types": "./dist/org/nostr/util/index.d.ts"
+    },
+    "./nip01": {
+      "import": "./dist/org/nostr/nip01/index.mjs",
+      "require": "./dist/org/nostr/nip01/index.cjs",
+      "types": "./dist/org/nostr/nip01/index.d.ts"
+    },
+    "./nip02": {
+      "import": "./dist/org/nostr/nip02/index.mjs",
+      "require": "./dist/org/nostr/nip02/index.cjs",
+      "types": "./dist/org/nostr/nip02/index.d.ts"
+    },
+    "./nip25": {
+      "import": "./dist/org/nostr/nip25/index.mjs",
+      "require": "./dist/org/nostr/nip25/index.cjs",
+      "types": "./dist/org/nostr/nip25/index.d.ts"
+    },
+    "./nip35": {
+      "import": "./dist/org/nostr/nip35/index.mjs",
+      "require": "./dist/org/nostr/nip35/index.cjs",
+      "types": "./dist/org/nostr/nip35/index.d.ts"
+    },
+    "./nip52": {
+      "import": "./dist/org/nostr/nip52/index.mjs",
+      "require": "./dist/org/nostr/nip52/index.cjs",
+      "types": "./dist/org/nostr/nip52/index.d.ts"
+    },
+    "./nip65": {
+      "import": "./dist/org/nostr/nip65/index.mjs",
+      "require": "./dist/org/nostr/nip65/index.cjs",
+      "types": "./dist/org/nostr/nip65/index.d.ts"
+    },
+    "./nip78": {
+      "import": "./dist/org/nostr/nip78/index.mjs",
+      "require": "./dist/org/nostr/nip78/index.cjs",
+      "types": "./dist/org/nostr/nip78/index.d.ts"
+    }
+  },
   "type": "module",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "gts clean && npm run clear && tsc-multi",
+    "clear": "rimraf tsconfig.cjs.tsbuildinfo tsconfig.mjs.tsbuildinfo tsconfig.js.tsbuildinfo",
     "prepublishOnly": "npm run build",
     "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
   },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "README.md"
+  ],
   "keywords": [],
   "author": "Rene Malmgren",
   "license": "GPL-3.0",
@@ -24,11 +97,13 @@
     "@types/node": "^22.9.0",
     "@types/ssh2": "^1.15.4",
     "chai": "^5.1.2",
+    "gts": "^6.0.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
     "ssh2": "^1.16.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
+    "tsc-multi": "^1.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   },

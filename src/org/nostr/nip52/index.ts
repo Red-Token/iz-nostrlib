@@ -1,0 +1,1 @@
+export * from '../nip52/Nip52CalendarEventTemplate'
