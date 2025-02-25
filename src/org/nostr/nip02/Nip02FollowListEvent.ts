@@ -1,6 +1,6 @@
 import type {CreateEventOpts, TrustedEvent} from "@welshman/util";
-import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
+import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 
 export class Followee {
     constructor(public pubkey: string, public relay?: string, public nickname?: string) {

@@ -1,14 +1,14 @@
-import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
+import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@welshman/util'
 import {
     AbstractNipMiniEvent,
     safeFindOptionalMultiTagValue,
     safeFindOptionalMultiTagValues,
     safeFindSingleTagValue
-} from "../AbstractNipEvent.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
+} from '../AbstractNipEvent'
+import {AbstractEventProcessor} from '../ses/StaticEventsProcessor'
 
 export class Nip35TorrentEvent extends AbstractNipMiniEvent {
-    public static KIND: number = 2003;
+    public static KIND: number = 2003
 
     // TODO Make the safeMethods eat the values and only leave the last
     static buildFromEvent(event: HashedEvent) {
@@ -34,7 +34,8 @@ export class Nip35TorrentEvent extends AbstractNipMiniEvent {
         public is: string[] = [],
         public ts: string[] = [],
         tags: string[][] = [],
-        event?: TrustedEvent) {
+        event?: TrustedEvent
+    ) {
         super(tags, event)
     }
 
@@ -43,36 +44,39 @@ export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     }
 
     get opts(): CreateEventOpts {
+        const tags = [...this.tags, ['title', this.title], ['x', this.x]]
 
-        const tags = [
-            ...this.tags,
-            ['title', this.title],
-            ['x', this.x],
-        ];
+        this.files
+            .map((file) => {
+                return ['file', ...file]
+            })
+            .forEach((tag) => {
+                tags.push(tag)
+            })
 
-        this.files.map(file => {
-            return ['file', ...file]
-        }).forEach(tag => {
-            tags.push(tag);
-        })
+        this.trackers
+            .map((tracker) => {
+                return ['tracker', tracker]
+            })
+            .forEach((tag) => {
+                tags.push(tag)
+            })
 
-        this.trackers.map(tracker => {
-            return ['tracker', tracker]
-        }).forEach(tag => {
-            tags.push(tag);
-        })
+        this.is
+            .map((i) => {
+                return ['i', i]
+            })
+            .forEach((tag) => {
+                tags.push(tag)
+            })
 
-        this.is.map(i => {
-            return ['i', i]
-        }).forEach(tag => {
-            tags.push(tag);
-        })
-
-        this.ts.map(t => {
-            return ['t', t]
-        }).forEach(tag => {
-            tags.push(tag);
-        })
+        this.ts
+            .map((t) => {
+                return ['t', t]
+            })
+            .forEach((tag) => {
+                tags.push(tag)
+            })
 
         return {
             content: JSON.stringify(this.description),
@@ -83,23 +87,21 @@ export class Nip35TorrentEvent extends AbstractNipMiniEvent {
 
 export class Nip35TorrentEventHandler extends AbstractEventProcessor<Nip35TorrentEvent> {
     constructor(handler: (event: Nip35TorrentEvent) => void) {
-        super(Nip35TorrentEvent.KIND, Nip35TorrentEvent.buildFromEvent, handler);
+        super(Nip35TorrentEvent.KIND, Nip35TorrentEvent.buildFromEvent, handler)
     }
 }
 
 export enum Nip10EtagMarker {
     ROOT = 'root',
     REPLY = 'reply',
-    MENTION = 'mention',
+    MENTION = 'mention'
 }
 
 export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
-    static KIND: number = 2004;
+    static KIND: number = 2004
 
     static buildFromEvent(event: HashedEvent) {
-        return new Nip35TorrentEventComments(
-            JSON.parse(event.content)
-        )
+        return new Nip35TorrentEventComments(JSON.parse(event.content))
     }
 
     constructor(public description: string, tags: string[][] = []) {
@@ -111,9 +113,7 @@ export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
     }
 
     get opts(): CreateEventOpts {
-        const tags = [
-            ...this.tags,
-        ];
+        const tags = [...this.tags]
 
         return {
             content: JSON.stringify(this.description),
@@ -124,6 +124,6 @@ export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
 
 export class Nip35TorrentEventCommentsHandler extends AbstractEventProcessor<Nip35TorrentEventComments> {
     constructor(handler: (event: Nip35TorrentEventComments) => void) {
-        super(Nip35TorrentEventComments.KIND, Nip35TorrentEventComments.buildFromEvent, handler);
+        super(Nip35TorrentEventComments.KIND, Nip35TorrentEventComments.buildFromEvent, handler)
     }
 }

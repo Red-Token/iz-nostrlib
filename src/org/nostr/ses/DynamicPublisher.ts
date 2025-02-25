@@ -1,9 +1,9 @@
 import {createEvent, OwnedEvent} from "@welshman/util";
 import {publishThunk} from "@welshman/app";
 import {own} from "@welshman/signer";
-import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession.js";
-import {AbstractNipMiniEvent} from "../AbstractNipEvent.js";
-import {Identity} from "../communities/Identity.js";
+import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession";
+import {AbstractNipMiniEvent} from "../AbstractNipEvent";
+import {Identity} from "../communities/Identity";
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession

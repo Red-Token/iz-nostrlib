@@ -1,9 +1,10 @@
-import {TrustedEvent} from "@welshman/util";
-import mitt from 'mitt';
+import {TrustedEvent} from '@welshman/util'
+import mitt from 'mitt'
 
+// Types of events in the stream
 export enum EventType {
-    DISCOVERED = 'discovered',
-    CONFIRMED = 'confirmed',
+    DISCOVERED = 'discovered', // New event
+    CONFIRMED = 'confirmed' // Confirmed event
 }
 
 type NostrEvents = {
@@ -11,22 +12,22 @@ type NostrEvents = {
     confirmed: TrustedEvent
 }
 
+// Class for processing incoming events
 export class SynchronisedEventStream {
-    eventLog = new Map<string, TrustedEvent>()
-    public emitter = mitt<NostrEvents>()
+    eventLog = new Map<string, TrustedEvent>() // Event log by ID
+    public emitter = mitt<NostrEvents>() // Event emitter
 
-    constructor() {
-    }
+    constructor() {}
 
+    // Processing an incoming event
     onIncomingEvent(event: TrustedEvent) {
         if (this.eventLog.has(event.id)) {
-            this.emitter.emit(EventType.CONFIRMED, event)
+            // If the event is already known
+            this.emitter.emit(EventType.CONFIRMED, event) // Confirmation
             return
         }
-
-        console.log("RECEIVED:" + event.id)
-
-        this.eventLog.set(event.id, event)
-        this.emitter.emit(EventType.DISCOVERED, event)
+        console.log('RECEIVED:' + event.id)
+        this.eventLog.set(event.id, event) // Saving a new event
+        this.emitter.emit(EventType.DISCOVERED, event) // Notification of a new event
     }
 }

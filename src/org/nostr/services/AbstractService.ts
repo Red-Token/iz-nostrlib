@@ -1,5 +1,5 @@
-import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession.js";
-import {AbstractNostrContext} from "../communities/AbstractNostrContext.js";
+import {DynamicSynchronisedSession} from "../ses/DynamicSynchronisedSession";
+import {AbstractNostrContext} from "../communities/AbstractNostrContext";
 
 export abstract class AbstractService extends DynamicSynchronisedSession {
     constructor(public context: AbstractNostrContext) {

@@ -1,78 +1,76 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.1.15-snapshot.6",
+  "version": "0.1.16-snapshot.0",
   "description": "Library that support Nostr messages",
-  "require": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
       "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs"
     },
     "./nips": {
-      "require": "./dist/org/nostr/nips/index.cjs",
       "import": "./dist/org/nostr/nips/index.mjs",
-      "types": "./dist/org/nostr/nips/index.d.ts"
+      "types": "./dist/org/nostr/nips/index.d.ts",
+      "require": "./dist/org/nostr/nips/index.cjs"
     },
     "./communities": {
-      "require": "./dist/org/nostr/communities/index.cjs",
       "import": "./dist/org/nostr/communities/index.mjs",
-      "types": "./dist/org/nostr/communities/index.d.ts"
+      "types": "./dist/org/nostr/communities/index.d.ts",
+      "require": "./dist/org/nostr/communities/index.cjs"
     },
     "./ses": {
-      "require": "./dist/org/nostr/ses/index.cjs",
       "import": "./dist/org/nostr/ses/index.mjs",
-      "types": "./dist/org/nostr/ses/index.d.ts"
+      "types": "./dist/org/nostr/ses/index.d.ts",
+      "require": "./dist/org/nostr/ses/index.cjs"
     },
     "./seederbot": {
-      "require": "./dist/org/nostr/seederbot/index.cjs",
       "import": "./dist/org/nostr/seederbot/index.mjs",
-      "types": "./dist/org/nostr/seederbot/index.d.ts"
+      "types": "./dist/org/nostr/seederbot/index.d.ts",
+      "require": "./dist/org/nostr/seederbot/index.cjs"
     },
     "./util": {
-      "require": "./dist/org/nostr/util/index.cjs",
       "import": "./dist/org/nostr/util/index.mjs",
-      "types": "./dist/org/nostr/util/index.d.ts"
+      "types": "./dist/org/nostr/util/index.d.ts",
+      "require": "./dist/org/nostr/util/index.cjs"
     },
     "./nip01": {
       "import": "./dist/org/nostr/nip01/index.mjs",
-      "require": "./dist/org/nostr/nip01/index.cjs",
-      "types": "./dist/org/nostr/nip01/index.d.ts"
+      "types": "./dist/org/nostr/nip01/index.d.ts",
+      "require": "./dist/org/nostr/nip01/index.cjs"
     },
     "./nip02": {
       "import": "./dist/org/nostr/nip02/index.mjs",
-      "require": "./dist/org/nostr/nip02/index.cjs",
-      "types": "./dist/org/nostr/nip02/index.d.ts"
+      "types": "./dist/org/nostr/nip02/index.d.ts",
+      "require": "./dist/org/nostr/nip02/index.cjs"
     },
     "./nip25": {
       "import": "./dist/org/nostr/nip25/index.mjs",
-      "require": "./dist/org/nostr/nip25/index.cjs",
-      "types": "./dist/org/nostr/nip25/index.d.ts"
+      "types": "./dist/org/nostr/nip25/index.d.ts",
+      "require": "./dist/org/nostr/nip25/index.cjs"
     },
     "./nip35": {
       "import": "./dist/org/nostr/nip35/index.mjs",
-      "require": "./dist/org/nostr/nip35/index.cjs",
-      "types": "./dist/org/nostr/nip35/index.d.ts"
+      "types": "./dist/org/nostr/nip35/index.d.ts",
+      "require": "./dist/org/nostr/nip35/index.cjs"
     },
     "./nip52": {
       "import": "./dist/org/nostr/nip52/index.mjs",
-      "require": "./dist/org/nostr/nip52/index.cjs",
-      "types": "./dist/org/nostr/nip52/index.d.ts"
+      "types": "./dist/org/nostr/nip52/index.d.ts",
+      "require": "./dist/org/nostr/nip52/index.cjs"
     },
     "./nip65": {
       "import": "./dist/org/nostr/nip65/index.mjs",
-      "require": "./dist/org/nostr/nip65/index.cjs",
-      "types": "./dist/org/nostr/nip65/index.d.ts"
+      "types": "./dist/org/nostr/nip65/index.d.ts",
+      "require": "./dist/org/nostr/nip65/index.cjs"
     },
     "./nip78": {
       "import": "./dist/org/nostr/nip78/index.mjs",
-      "require": "./dist/org/nostr/nip78/index.cjs",
-      "types": "./dist/org/nostr/nip78/index.d.ts"
+      "types": "./dist/org/nostr/nip78/index.d.ts",
+      "require": "./dist/org/nostr/nip78/index.cjs"
     }
   },
-  "type": "module",
   "directories": {
     "test": "test"
   },
@@ -80,12 +78,15 @@
     "build": "gts clean && npm run clear && tsc-multi",
     "clear": "rimraf tsconfig.cjs.tsbuildinfo tsconfig.mjs.tsbuildinfo tsconfig.js.tsbuildinfo",
     "prepublishOnly": "npm run build",
+    "patch": "npm version patch && npm publish",
+    "snapshot": "npm version prerelease --preid snapshot --no-git-tag-version && npm publish",
     "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
   },
   "files": [
     "dist/**/*",
     "package.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [],
   "author": "Rene Malmgren",
@@ -100,6 +101,7 @@
     "gts": "^6.0.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
+    "rimraf": "^6.0.1",
     "ssh2": "^1.16.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
@@ -114,15 +116,16 @@
   },
   "dependencies": {
     "@noble/hashes": "^1.5.0",
-    "@welshman/app": "~0.0.29",
-    "@welshman/content": "~0.0.12",
-    "@welshman/dvm": "~0.0.10",
-    "@welshman/feeds": "~0.0.25",
-    "@welshman/lib": "~0.0.26",
-    "@welshman/net": "~0.0.38",
-    "@welshman/signer": "~0.0.14",
-    "@welshman/store": "~0.0.12",
-    "@welshman/util": "~0.0.45",
+    
+    "@welshman/app": "^0.0.40-snapshot.0",
+    "@welshman/content": "^0.0.16-snapshot.0",
+    "@welshman/dvm": "0.0.15-snapshot.0",
+    "@welshman/feeds": "0.0.31-snapshot.0",
+    "@welshman/lib": "0.0.40-snapshot.0",
+    "@welshman/net": "0.0.47-snapshot.0",
+    "@welshman/signer": "0.0.21-snapshot.0",
+    "@welshman/store": "0.0.17-snapshot.0",
+    "@welshman/util": "0.0.61-snapshot.0",
     "deepmerge": "^4.3.1",
     "mitt": "^3.0.1",
     "node-ssh": "^13.2.0",
