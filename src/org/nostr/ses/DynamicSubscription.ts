@@ -1,7 +1,7 @@
 import {PartialSubscribeRequest, subscribe} from "@welshman/app";
 import {Filter, TrustedEvent} from "@welshman/util";
 import {Subscription} from "@welshman/net";
-import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession.js";
+import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession";
 
 export class DynamicSubscription {
     private _subscriptions: Map<string, Subscription> = new Map<string, Subscription>();

@@ -1,6 +1,6 @@
-import {ReactiveArray} from "../util/ReactiveArray.js";
-import {ReactiveMap} from "../util/ReactiveMap.js";
-import {Identity} from "./Identity.js";
+import {ReactiveArray} from "../util/ReactiveArray";
+import {ReactiveMap} from "../util/ReactiveMap";
+import {Identity} from "./Identity";
 import {AbstractService} from "../services/AbstractService";
 
 export class AbstractNostrContext {

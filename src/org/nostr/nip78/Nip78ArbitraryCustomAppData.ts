@@ -1,6 +1,6 @@
 import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
-import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
+import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 
 export class Nip78ArbitraryCustomAppData<T> extends AbstractNipMiniEvent {
     public static KIND: number = 30078;

@@ -1,4 +1,4 @@
-import {AbstractNostrContext} from "./AbstractNostrContext.js";
+import {AbstractNostrContext} from "./AbstractNostrContext";
 import {ProfileService} from "../services/ProfileService";
 import {AppDataService} from "../services/AppDataService";
 import {GlobalNostrContext} from "./GlobalNostrContext";

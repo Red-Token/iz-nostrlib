@@ -1,8 +1,8 @@
-import {createEvent, CreateEventOpts} from "@welshman/util";
-import {publishThunk} from "@welshman/app";
-import {SynchronisedSession} from "./SynchronisedSession.js";
-import {own} from "@welshman/signer";
-import {Identity} from "../communities/Identity.js";
+import {createEvent, CreateEventOpts} from '@welshman/util'
+import {publishThunk} from '@welshman/app'
+import {SynchronisedSession} from './SynchronisedSession'
+import {own} from '@welshman/signer'
+import {Identity} from '../communities/Identity'
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession
@@ -13,16 +13,16 @@ import {Identity} from "../communities/Identity.js";
  *
  */
 export class Publisher {
-    constructor(readonly session: SynchronisedSession, private comminityIdentiy: Identity) {
-    }
+    constructor(readonly session: SynchronisedSession, private comminityIdentiy: Identity) {}
 
+    // Publishing an event with the specified type and content
     publish(kind: number, payload: CreateEventOpts) {
-        const event = own(createEvent(kind, payload), this.comminityIdentiy.pubkey)
-
+        const event = own(createEvent(kind, payload), this.comminityIdentiy.pubkey) // Creating an event with pubkey
         // Sent the message
         return publishThunk({
+            // Sending an event via welshman
             event,
-            relays: this.session.relays,
+            relays: this.session.relays
         })
     }
 }

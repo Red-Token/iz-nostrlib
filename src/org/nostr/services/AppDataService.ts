@@ -1,11 +1,11 @@
 import type {TrustedEvent} from "@welshman/util";
-import {EventType} from "../ses/SynchronisedEventStream.js";
-import {DynamicSubscription} from "../ses/DynamicSubscription.js";
-import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData.js";
-import {updateIfNewer} from "../util/scraps.js";
-import {StaticEventsProcessor} from "../ses/StaticEventsProcessor.js";
-import {AppNostrContext, collectRelaysFromIdentities} from "../communities/AppNostrContext.js";
-import {AbstractService} from "./AbstractService.js";
+import {EventType} from "../ses/SynchronisedEventStream";
+import {DynamicSubscription} from "../ses/DynamicSubscription";
+import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData";
+import {updateIfNewer} from "../util/scraps";
+import {StaticEventsProcessor} from "../ses/StaticEventsProcessor";
+import {AppNostrContext, collectRelaysFromIdentities} from "../communities/AppNostrContext";
+import {AbstractService} from "./AbstractService";
 
 export function getOrCreate<K, K2, V>(key: K, map: Map<K, Map<K2, V>>) {
     let element = map.get(key);

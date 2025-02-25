@@ -1,5 +1,5 @@
 import {type CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
-import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent.js";
+import {AbstractNipMiniEvent, safeFindSingleTagValue} from "../AbstractNipEvent";
 import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
 import {Nip35TorrentEvent} from "../nip35/Nip35TorrentEvent";
 

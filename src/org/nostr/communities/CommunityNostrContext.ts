@@ -1,5 +1,5 @@
-import {AbstractNostrContext} from "./AbstractNostrContext.js";
-import {GlobalNostrContext} from "./GlobalNostrContext.js";
+import {AbstractNostrContext} from "./AbstractNostrContext";
+import {GlobalNostrContext} from "./GlobalNostrContext";
 
 export class CommunityNostrContext extends AbstractNostrContext {
 
