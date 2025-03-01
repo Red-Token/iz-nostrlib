@@ -1,7 +1,8 @@
 import {type SignerData, SignerType, SynchronisedSession} from '../ses/SynchronisedSession'
-import {Session}  from '@welshman/app'
+import {Session, SessionNip01, SessionNip07, SessionNip46}  from '@welshman/app'
 import {getPublicKey, nip19} from 'nostr-tools'
 import {bytesToHex} from '@noble/hashes/utils'
+
 
 // The main class of the customer Nostr, implemented as a singleton
 export class NostrClient {
@@ -17,19 +18,19 @@ export class NostrClient {
 
     // Signature data converters to Session object for welshman
     static transformer = {
-        nip01: (session: SignerData): Session => {
+        nip01: (session: SignerData): SessionNip01 => {
             // Local signature with a private key
             if (session.nsec === undefined) throw new Error('no nsec in session')
             const decoded = nip19.decode(session.nsec)
             if (decoded.type !== 'nsec') throw new Error('Decoded value not of type nsec')
             const secKey: Uint8Array = decoded.data
-            return {method: session.type, pubkey: getPublicKey(secKey), secret: bytesToHex(secKey)}
+            return {method: SignerType.NIP01, pubkey: getPublicKey(secKey), secret: bytesToHex(secKey)}
         },
-        nip07: (session: SignerData): Session => {
+        nip07: (session: SignerData): SessionNip07 => {
             // Signature through the expansion of the browser
-            return {method: session.type, pubkey: session.pubkey ? session.pubkey : ''}
+            return {method: SignerType.NIP07, pubkey: session.pubkey ? session.pubkey : ''}
         },
-        nip46: (session: SignerData): Session => {
+        nip46: (session: SignerData): SessionNip46 => {
             // Remote signature
             if (!session.secret || !session.rpubkey || !session.relays) {
                 throw new Error('NIP-46 requires secret, rpubkey, and relays')
@@ -38,7 +39,7 @@ export class NostrClient {
             // const pubkey = getPublicKey(sessionSecretKey)
             // TODO This does not work at all
             return {
-                method: session.type,
+                method: SignerType.NIP46,
                 pubkey: session.pubkey ?? '',
                 secret: session.secret,
                 handler: {relays: session.relays, pubkey: session.rpubkey}
