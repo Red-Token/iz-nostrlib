@@ -1,5 +1,5 @@
 import {TrustedEvent} from '@red-token/welshman/util'
-import mitt from 'mitt';
+import {mitt} from '@red-token/mitt'
 
 // Types of events in the stream
 export enum EventType {
@@ -16,7 +16,8 @@ type NostrEvents = {
 export class SynchronisedEventStream {
     eventLog = new Map<string, TrustedEvent>() // Event log by ID
 
-    public emitter = mitt.default<NostrEvents>() // Event emitter
+    //public emitter: Emitter<NostrEvents> = mitt<NostrEvents>()
+    public emitter = mitt<NostrEvents>() // Event emitter
 
     constructor() {}
 
