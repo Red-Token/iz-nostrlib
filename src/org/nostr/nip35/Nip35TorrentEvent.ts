@@ -1,11 +1,11 @@
-import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@welshman/util'
+import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@red-token/welshman/util'
 import {
     AbstractNipMiniEvent,
     safeFindOptionalMultiTagValue,
     safeFindOptionalMultiTagValues,
     safeFindSingleTagValue
-} from '../AbstractNipEvent'
-import {AbstractEventProcessor} from '../ses/StaticEventsProcessor'
+} from '../AbstractNipEvent.js'
+import {AbstractEventProcessor} from '../ses/StaticEventsProcessor.js'
 
 export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     public static KIND: number = 2003

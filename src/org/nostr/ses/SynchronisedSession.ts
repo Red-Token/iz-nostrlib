@@ -1,7 +1,7 @@
-import {addSession, getSigner, Session} from '@welshman/app'
-import {SynchronisedEventStream} from './SynchronisedEventStream'
-import {ISigner} from '@welshman/signer'
-import {NostrClient} from '../client/NostrClient'
+import {addSession, getSigner, Session} from '@red-token/welshman/app'
+import {SynchronisedEventStream} from './SynchronisedEventStream.js'
+import {ISigner} from '@red-token/welshman/signer'
+import {NostrClient} from '../client/NostrClient.js'
 
 // Signature data type
 export type SignerData = {

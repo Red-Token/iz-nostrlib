@@ -1,8 +1,8 @@
-import {createEvent, CreateEventOpts} from '@welshman/util'
-import {publishThunk} from '@welshman/app'
-import {SynchronisedSession} from './SynchronisedSession'
-import {own} from '@welshman/signer'
-import {Identity} from '../communities/Identity'
+import {createEvent, CreateEventOpts} from '@red-token/welshman/util'
+import {publishThunk} from '@red-token/welshman/app'
+import {SynchronisedSession} from './SynchronisedSession.js'
+import {own} from '@red-token/welshman/signer'
+import {Identity} from '../communities/Identity.js'
 
 /**
  * A Publisher publishes Events to a set of relays as part of a SynchronisedSession

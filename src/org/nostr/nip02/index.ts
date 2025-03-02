@@ -1,1 +1,1 @@
-export * from '../nip02/Nip02FollowListEvent'
+export * from '../nip02/Nip02FollowListEvent.js'

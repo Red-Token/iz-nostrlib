@@ -1,1 +1,1 @@
-export * from '../nip52/Nip52CalendarEventTemplate'
+export * from '../nip52/Nip52CalendarEventTemplate.js'

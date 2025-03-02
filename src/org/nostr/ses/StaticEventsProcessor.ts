@@ -1,5 +1,5 @@
-import {AbstractNipMiniEvent} from '../AbstractNipEvent'
-import type {TrustedEvent} from '@welshman/util'
+import {AbstractNipMiniEvent} from '../AbstractNipEvent.js'
+import type {TrustedEvent} from '@red-token/welshman/util'
 
 // Abstract event handler of a certain type (kind)
 export class AbstractEventProcessor<T extends AbstractNipMiniEvent> {

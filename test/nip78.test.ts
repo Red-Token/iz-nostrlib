@@ -1,5 +1,5 @@
 import {SignerData, SignerType, SynchronisedSession} from "../src";
-import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
+import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/build/src/util";
 import {GlobalNostrContext} from "../src/org/nostr/communities/GlobalNostrContext";
 import {DynamicPublisher} from "../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent} from "../src/org/nostr/nip01/Nip01UserMetaData";
@@ -10,8 +10,8 @@ import {
 } from "../src/org/nostr/communities/CommunityNostrContext";
 
 import {Subscription} from "../src";
-import {getDefaultAppContext, getDefaultNetContext, PartialSubscribeRequest, subscribe} from "@welshman/app";
-import {setContext} from "@welshman/lib";
+import {getDefaultAppContext, getDefaultNetContext, PartialSubscribeRequest, subscribe} from "@red-token/welshman/build/src/app";
+import {setContext} from "@red-token/welshman/build/src/lib";
 import {wait} from "./util";
 import {expect} from "chai";
 import {Nip65RelayListMetadataEvent} from "../src/org/nostr/nip65/Nip65RelayListMetadata";

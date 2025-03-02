@@ -1,6 +1,6 @@
-import {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
-import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
+import {CreateEventOpts, HashedEvent, TrustedEvent} from "@red-token/welshman/util";
+import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 
 export enum RelayType {
     READ = 'read',

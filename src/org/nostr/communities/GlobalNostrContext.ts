@@ -1,6 +1,6 @@
-import {AbstractNostrContext} from './AbstractNostrContext'
-import {ProfileService} from '../services/ProfileService'
-import {normalizeRelayUrl} from '@welshman/util'
+import {AbstractNostrContext} from './AbstractNostrContext.js'
+import {ProfileService} from '../services/ProfileService.js'
+import {normalizeRelayUrl} from '@red-token/welshman/util'
 
 /**
  * This context is the global context and is used for maintaining the global profile database.

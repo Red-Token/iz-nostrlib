@@ -1,1 +1,1 @@
-export * from '../nip35/Nip35TorrentEvent'
+export * from '../nip35/Nip35TorrentEvent.js'

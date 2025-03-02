@@ -1,3 +1,3 @@
-export * from './ReactiveArray'
-export * from './ReactiveMap'
-export * from './scraps'
+export * from './ReactiveArray.js'
+export * from './ReactiveMap.js'
+export * from './scraps.js'

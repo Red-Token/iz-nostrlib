@@ -1,5 +1,5 @@
 import {EventType, Followee, Nip02FollowListEvent, SignerData, SignerType} from '../../src'
-import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
+import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/build/src/util";
 import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext";
 import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
@@ -7,8 +7,8 @@ import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfi
 import {
     CommunityNostrContext
 } from "../../src/org/nostr/communities/CommunityNostrContext";
-import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
-import {setContext} from "@welshman/lib";
+import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/build/src/app";
+import {setContext} from "@red-token/welshman/build/src/lib";
 import {wait} from '../util'
 import {expect} from "chai";
 import {Nip65RelayListMetadataEvent} from "../../src/org/nostr/nip65/Nip65RelayListMetadata";

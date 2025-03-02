@@ -1,1 +1,1 @@
-export * from '../nip25/Nip25Reactions'
+export * from '../nip25/Nip25Reactions.js'

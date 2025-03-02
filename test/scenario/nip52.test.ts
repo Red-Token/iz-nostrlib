@@ -8,12 +8,12 @@ import {
     Nip52RsvpStatusType
 } from "../../src/org/nostr/nip52/Nip52CalendarEventTemplate";
 import {randomUUID} from "crypto";
-import {createEvent, normalizeRelayUrl, TrustedEvent} from "@welshman/util";
-import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
+import {createEvent, normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/build/src/util";
+import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/build/src/app";
 
 import {EventType, SignerData, SignerType} from "../../src";
 import {NostrClient} from "../../src/org/nostr/client/NostrClient";
-import {setContext} from "@welshman/lib";
+import {setContext} from "@red-token/welshman/build/src/lib";
 
 describe('Async Test Example', () => {
     it('should complete an async operation', async () => {

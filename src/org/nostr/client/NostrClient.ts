@@ -1,5 +1,5 @@
-import {type SignerData, SignerType, SynchronisedSession} from '../ses/SynchronisedSession'
-import {Session, SessionNip01, SessionNip07, SessionNip46}  from '@welshman/app'
+import {type SignerData, SignerType, SynchronisedSession} from '../ses/SynchronisedSession.js'
+import {Session, SessionNip01, SessionNip07, SessionNip46}  from '@red-token/welshman/app'
 import {getPublicKey, nip19} from 'nostr-tools'
 import {bytesToHex} from '@noble/hashes/utils'
 

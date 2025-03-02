@@ -1,6 +1,6 @@
-import type {CreateEventOpts, TrustedEvent} from "@welshman/util";
-import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor";
+import type {CreateEventOpts, TrustedEvent} from "@red-token/welshman/util";
+import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
+import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 
 export class Nip25ReactionsEvent extends AbstractNipMiniEvent {
     public static KIND: number = 7;

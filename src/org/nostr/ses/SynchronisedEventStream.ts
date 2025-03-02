@@ -1,5 +1,5 @@
-import {TrustedEvent} from '@welshman/util'
-import mitt from 'mitt'
+import {TrustedEvent} from '@red-token/welshman/util'
+import mitt from 'mitt' // To resolve this error, I removed default in export at the top level of the module
 
 // Types of events in the stream
 export enum EventType {

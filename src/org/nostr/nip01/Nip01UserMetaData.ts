@@ -1,7 +1,7 @@
-import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@welshman/util'
-import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues, safeFindOptionalSingleTagValue} from '../AbstractNipEvent'
-import {NostrUserProfileMetaData} from './NostrUserProfileMetaData'
-import {AbstractEventProcessor} from '../ses/StaticEventsProcessor'
+import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@red-token/welshman/util'
+import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues, safeFindOptionalSingleTagValue} from '../AbstractNipEvent.js'
+import {NostrUserProfileMetaData} from './NostrUserProfileMetaData.js'
+import {AbstractEventProcessor} from '../ses/StaticEventsProcessor.js'
 
 export enum UserType {
     INDIVIDUAL = 'individual',

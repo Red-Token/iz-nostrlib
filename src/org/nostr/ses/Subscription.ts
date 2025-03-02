@@ -1,6 +1,6 @@
-import {PartialSubscribeRequest, subscribe} from '@welshman/app'
-import {SynchronisedSession} from './SynchronisedSession'
-import {Filter, TrustedEvent} from '@welshman/util'
+import {PartialSubscribeRequest, subscribe} from '@red-token/welshman/app'
+import {SynchronisedSession} from './SynchronisedSession.js'
+import {Filter, TrustedEvent} from '@red-token/welshman/util'
 
 // Class for creating event subscriptions
 export class Subscription {

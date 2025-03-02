@@ -1,4 +1,4 @@
-import {HashedEvent, TrustedEvent} from "@welshman/util";
+import {HashedEvent, TrustedEvent} from "@red-token/welshman/util";
 
 function getISO8601Date(date: Date) {
     return date.toISOString().split('T')[0]

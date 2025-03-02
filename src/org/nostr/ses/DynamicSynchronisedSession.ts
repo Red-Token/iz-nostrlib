@@ -1,6 +1,6 @@
-import {SynchronisedEventStream} from "./SynchronisedEventStream";
-import {ReactiveArray} from "../util/ReactiveArray";
-import {DynamicSubscription} from "./DynamicSubscription";
+import {SynchronisedEventStream} from "./SynchronisedEventStream.js";
+import {ReactiveArray} from "../util/ReactiveArray.js";
+import {DynamicSubscription} from "./DynamicSubscription.js";
 
 export type SignerData = {
     type: SignerType,

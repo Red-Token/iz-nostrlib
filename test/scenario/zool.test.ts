@@ -1,5 +1,5 @@
 import {CommunityNostrContext, CommunityIdentity} from "../../src/org/nostr/communities/CommunityNostrContext";
-import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
+import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/build/src/util";
 import {EventType, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip35TorrentEvent, Nip35TorrentEventBuilder} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
 import {Subscription} from "../../src"
