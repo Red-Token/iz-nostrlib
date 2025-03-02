@@ -1,5 +1,5 @@
 import {TrustedEvent} from '@red-token/welshman/util'
-import mitt from 'mitt' // To resolve this error, I removed default in export at the top level of the module
+import mitt from 'mitt';
 
 // Types of events in the stream
 export enum EventType {
@@ -15,7 +15,8 @@ type NostrEvents = {
 // Class for processing incoming events
 export class SynchronisedEventStream {
     eventLog = new Map<string, TrustedEvent>() // Event log by ID
-    public emitter = mitt<NostrEvents>() // Event emitter
+
+    public emitter = mitt.default<NostrEvents>() // Event emitter
 
     constructor() {}
 
