@@ -80,7 +80,10 @@
     "prepublishOnly": "npm run build",
     "patch": "npm version patch && npm publish",
     "snapshot": "npm version prerelease --preid snapshot --no-git-tag-version && npm publish",
-    "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
+    "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts",
+    "lint": "gts lint",
+    "format": "prettier --write .",
+    "fix": "gts fix"
   },
   "files": [
     "dist/**/*",
@@ -92,12 +95,15 @@
   "author": "Rene Malmgren",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@eslint/js": "^9.21.0",
     "@types/chai": "^5.0.1",
     "@types/expect": "^24.3.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.9.0",
     "@types/ssh2": "^1.15.4",
     "chai": "^5.1.2",
+    "eslint": "^8.57.1",
+    "globals": "^16.0.0",
     "gts": "^6.0.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
@@ -107,7 +113,8 @@
     "ts-node": "^10.9.2",
     "tsc-multi": "^1.1.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.25.0"
   },
   "mocha": {
     "node-option": [
