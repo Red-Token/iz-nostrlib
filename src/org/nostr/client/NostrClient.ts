@@ -17,8 +17,8 @@ export class NostrClient {
     }
 
     // Signature data converters to Session object for welshman
-    static transformer = {
-        nip01: (session: SignerData): SessionNip01 => {
+    static readonly transformer = {
+        nip01: (session: SignerData): Session => {
             // Local signature with a private key
             if (session.nsec === undefined) throw new Error('no nsec in session')
             const decoded = nip19.decode(session.nsec)
@@ -26,11 +26,11 @@ export class NostrClient {
             const secKey: Uint8Array = decoded.data
             return {method: SignerType.NIP01, pubkey: getPublicKey(secKey), secret: bytesToHex(secKey)}
         },
-        nip07: (session: SignerData): SessionNip07 => {
+        nip07: (session: SignerData): Session => {
             // Signature through the expansion of the browser
             return {method: SignerType.NIP07, pubkey: session.pubkey ? session.pubkey : ''}
         },
-        nip46: (session: SignerData): SessionNip46 => {
+        nip46: (session: SignerData): Session => {
             // Remote signature
             if (!session.secret || !session.rpubkey || !session.relays) {
                 throw new Error('NIP-46 requires secret, rpubkey, and relays')
