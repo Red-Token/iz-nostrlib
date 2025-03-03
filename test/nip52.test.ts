@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import {Nip52CalendarEvent, Nip52CalendarEventTemplateBuilder} from "../src/org/nostr/nip52/Nip52CalendarEventTemplate";
 import {randomUUID} from "crypto";
-import {createEvent, normalizeRelayUrl} from "@red-token/welshman/build/src/util";
-import {prepEvent, publishThunk} from "@red-token/welshman/build/src/app";
+import {createEvent, normalizeRelayUrl} from "@red-token/welshman/util";
+import {prepEvent, publishThunk} from "@red-token/welshman/app";
 import {SignerType, SynchronisedSession} from "../src";
 
 describe('Zool is Cool', () => {

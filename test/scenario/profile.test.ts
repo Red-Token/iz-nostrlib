@@ -1,11 +1,11 @@
-import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/build/src/app";
-import {setContext} from "@red-token/welshman/build/src/lib";
+import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
+import {setContext} from "@red-token/welshman/lib";
 import {
     CommunityNostrContext,
     CommunityIdentity,
     NotificationEventType
 } from "../../src/org/nostr/communities/CommunityNostrContext";
-import {normalizeRelayUrl} from "@red-token/welshman/build/src/util";
+import {normalizeRelayUrl} from "@red-token/welshman/util";
 import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
