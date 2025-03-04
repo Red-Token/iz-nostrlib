@@ -1,9 +1,9 @@
-import {CommunityNostrContext, CommunityIdentity} from "../../src/org/nostr/communities/CommunityNostrContext";
+import {CommunityNostrContext, CommunityIdentity} from "../../src/org/nostr/communities/CommunityNostrContext.js";
 import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/util";
-import {EventType, SignerData, SignerType, SynchronisedSession} from "../../src";
-import {Nip35TorrentEvent, Nip35TorrentEventBuilder} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
-import {Subscription} from "../../src"
-import {asyncCreateWelshmanSession} from "../../src/org/nostr/communities/Identity";
+import {EventType, SignerData, SignerType, SynchronisedSession} from "../../src/index.js";
+import {Nip35TorrentEvent, Nip35TorrentEventBuilder} from "../../src/org/nostr/nip35/Nip35TorrentEvent.js";
+import {Subscription} from "../../src/index.js"
+import {asyncCreateWelshmanSession} from "../../src/org/nostr/communities/Identity.js";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
