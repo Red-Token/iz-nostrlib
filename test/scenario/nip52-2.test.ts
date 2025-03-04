@@ -1,9 +1,9 @@
 import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/util";
 import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
 
-import {EventType, NostrClient, SignerData, SignerType} from "../../src";
+import {EventType, NostrClient, SignerData, SignerType} from "../../src/index.js";
 import {setContext} from "@red-token/welshman/lib";
-import {Subscription} from "../../src";
+import {Subscription} from "../../src/index.js";
 
 describe('Async Test Example', () => {
     it('should complete an async operation', async () => {

@@ -6,13 +6,13 @@ import {
     Nip52CalendarEventTemplateBuilder,
     Nip52IndividualStatusType,
     Nip52RsvpStatusType
-} from "../../src/org/nostr/nip52/Nip52CalendarEventTemplate";
+} from "../../src/org/nostr/nip52/Nip52CalendarEventTemplate.js";
 import {randomUUID} from "crypto";
 import {createEvent, normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/util";
 import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
 
-import {EventType, SignerData, SignerType} from "../../src";
-import {NostrClient} from "../../src/org/nostr/client/NostrClient";
+import {EventType, SignerData, SignerType} from "../../src/index.js";
+import {NostrClient} from "../../src/org/nostr/client/NostrClient.js";
 import {setContext} from "@red-token/welshman/lib";
 
 describe('Async Test Example', () => {

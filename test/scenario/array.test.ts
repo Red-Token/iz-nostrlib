@@ -1,4 +1,4 @@
-import {ReactiveArray} from "../../src/org/nostr/util/ReactiveArray";
+import {ReactiveArray} from "../../src/org/nostr/util/ReactiveArray.js";
 
 describe('Test of creating a reactive array', () => {
 

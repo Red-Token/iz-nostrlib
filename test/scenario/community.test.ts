@@ -1,14 +1,14 @@
 import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
 import {setContext} from "@red-token/welshman/lib";
-import {CommunityNostrContext, NotificationEventType} from "../../src/org/nostr/communities/CommunityNostrContext";
+import {CommunityNostrContext, NotificationEventType} from "../../src/org/nostr/communities/CommunityNostrContext.js";
 import {normalizeRelayUrl} from "@red-token/welshman/util";
-import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src";
-import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData";
-import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
-import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent";
-import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
+import {Publisher, SignerData, SignerType, SynchronisedSession} from "../../src/index.js";
+import {Nip01UserMetaDataEvent} from "../../src/org/nostr/nip01/Nip01UserMetaData.js";
+import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData.js";
+import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02/Nip02FollowListEvent.js";
+import {Nip35TorrentEvent} from "../../src/org/nostr/nip35/Nip35TorrentEvent.js";
 import {expect} from "chai";
-import {asyncCreateWelshmanSession} from "../../src/org/nostr/communities/Identity";
+import {asyncCreateWelshmanSession} from "../../src/org/nostr/communities/Identity.js";
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 

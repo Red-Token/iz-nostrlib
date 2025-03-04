@@ -7,19 +7,7 @@ import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfi
 import {CommunityNostrContext} from "../../src/org/nostr/communities/CommunityNostrContext";
 import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
 import {setContext} from "@red-token/welshman/lib";
-import {expect} from "chai";
-import {Nip65RelayListMetadataEvent} from "../../src/org/nostr/nip65/Nip65RelayListMetadata";
-import {Nip78ArbitraryCustomAppData} from "../../src/org/nostr/nip78/Nip78ArbitraryCustomAppData";
-import {AppNostrContext} from "../../src/org/nostr/communities/AppNostrContext";
-import {Client} from 'ssh2';
-import * as fs from "node:fs";
-import {DynamicSynchronisedSession} from "../../src/org/nostr/ses/DynamicSynchronisedSession";
-import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/nip35/Nip35TorrentEvent";
-import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
-import {StaticEventsProcessor} from "../../src/org/nostr/ses/StaticEventsProcessor";
-import {asyncCreateWelshmanSession, Identifier, Identity} from "../../src/org/nostr/communities/Identity";
-import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02";
-import {wait} from "../util";
+import {Client} from "ssh2";
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -80,7 +68,6 @@ describe('Async Test Example', () => {
         // Update Alice profile
         const aliceMetaDataEvent = new Nip01UserMetaDataEvent(new NostrUserProfileMetaData('Alice', 'The Queen of Tests', 'alice.jpg'))
         aliceGlobalDynamicPublisher.publish(aliceMetaDataEvent)
-
 
 
         await wait(2000)
