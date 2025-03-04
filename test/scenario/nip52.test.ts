@@ -143,7 +143,7 @@ describe('Async Test Example', () => {
         const eventData = {
             kind: tmpKind,
             pubkey: eventEvent.event.pubkey,
-            uuid: (eventEvent.event.tags.find(tag => tag[0] === 'd') ?? [0, undefined])[1],
+            uuid: (eventEvent.event.tags.find((tag: string[]) => tag[0] === 'd') ?? [0, undefined])[1],
         }
 
         // http://localhost:5174/event/events/10777/38eaed1007b09106a29c2f5d8d3f28dbad24a91db94d3b38836b852e368878ff/d46ffac4-d4ce-4074-b2b4-adabc2e503e8,d46ffac4-d4ce-4074-b2b4-adabc2e503e8

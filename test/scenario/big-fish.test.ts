@@ -1,6 +1,6 @@
 import {EventType, SignerData, SignerType} from '../../src'
 import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/util";
-import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext";
+import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext.js";
 import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
