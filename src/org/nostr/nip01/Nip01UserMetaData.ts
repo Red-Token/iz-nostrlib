@@ -37,7 +37,7 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
     }
 
     constructor(public profile: NostrUserProfileMetaData,
-                public type: string = UserType.INDIVIDUAL,
+                private _type: string = UserType.INDIVIDUAL,
                 public capabilities: string[][] = [],
                 tags: string[][] = [],
                 event?: TrustedEvent
@@ -57,13 +57,17 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
         const tags = [
             ...this.tags,
             ...nTags,
-            ['c', this.type]
+            ['c', this._type]
         ];
 
         return {
             content: JSON.stringify(this.profile),
             tags
         }
+    }
+
+    get type(): string {
+        return this._type === undefined ? UserType.INDIVIDUAL : this._type
     }
 }
 
