@@ -1,7 +1,7 @@
 // import {SignerData} from "../ses/SynchronisedSession";
 import {NostrClient} from "../client/NostrClient.js";
-import {addSession, getSigner, Session} from "@welshman/app";
-import {Nip01Signer, Nip07Signer, Nip46Signer, Nip55Signer} from "@welshman/signer";
+import {addSession, getSigner, Session} from "@red-token/welshman/app";
+import {Nip01Signer, Nip07Signer, Nip46Signer, Nip55Signer} from "@red-token/welshman/signer";
 import {AbstractNostrContext} from "./AbstractNostrContext.js";
 import {SignerData} from "../ses/DynamicSynchronisedSession.js";
 

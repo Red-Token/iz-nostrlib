@@ -1,6 +1,6 @@
-import {createEvent, OwnedEvent} from "@welshman/util";
-import {publishThunk} from "@welshman/app";
-import {own} from "@welshman/signer";
+import {createEvent, OwnedEvent} from "@red-token/welshman/util";
+import {publishThunk} from "@red-token/welshman/app";
+import {own} from "@red-token/welshman/signer";
 import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession.js";
 import {AbstractNipMiniEvent} from "../AbstractNipEvent.js";
 import {Identity} from "../communities/Identity.js";

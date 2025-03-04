@@ -1,7 +1,7 @@
 import {ReactiveArray} from "../util/ReactiveArray.js";
 import {ReactiveMap} from "../util/ReactiveMap.js";
 import {Identity} from "./Identity.js";
-import {AbstractService} from "../services/AbstractService";
+import {AbstractService} from "../services/AbstractService.js";
 
 export class AbstractNostrContext {
     public relays: ReactiveArray<string>

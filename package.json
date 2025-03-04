@@ -1,36 +1,122 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.1.15-snapshot.8",
+  "version": "0.2.1",
   "description": "Library that support Nostr messages",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs"
+    },
+    "./nips": {
+      "import": "./dist/org/nostr/nips/index.mjs",
+      "types": "./dist/org/nostr/nips/index.d.ts",
+      "require": "./dist/org/nostr/nips/index.cjs"
+    },
+    "./communities": {
+      "import": "./dist/org/nostr/communities/index.mjs",
+      "types": "./dist/org/nostr/communities/index.d.ts",
+      "require": "./dist/org/nostr/communities/index.cjs"
+    },
+    "./ses": {
+      "import": "./dist/org/nostr/ses/index.mjs",
+      "types": "./dist/org/nostr/ses/index.d.ts",
+      "require": "./dist/org/nostr/ses/index.cjs"
+    },
+    "./seederbot": {
+      "import": "./dist/org/nostr/seederbot/index.mjs",
+      "types": "./dist/org/nostr/seederbot/index.d.ts",
+      "require": "./dist/org/nostr/seederbot/index.cjs"
+    },
+    "./util": {
+      "import": "./dist/org/nostr/util/index.mjs",
+      "types": "./dist/org/nostr/util/index.d.ts",
+      "require": "./dist/org/nostr/util/index.cjs"
+    },
+    "./nip01": {
+      "import": "./dist/org/nostr/nip01/index.mjs",
+      "types": "./dist/org/nostr/nip01/index.d.ts",
+      "require": "./dist/org/nostr/nip01/index.cjs"
+    },
+    "./nip02": {
+      "import": "./dist/org/nostr/nip02/index.mjs",
+      "types": "./dist/org/nostr/nip02/index.d.ts",
+      "require": "./dist/org/nostr/nip02/index.cjs"
+    },
+    "./nip25": {
+      "import": "./dist/org/nostr/nip25/index.mjs",
+      "types": "./dist/org/nostr/nip25/index.d.ts",
+      "require": "./dist/org/nostr/nip25/index.cjs"
+    },
+    "./nip35": {
+      "import": "./dist/org/nostr/nip35/index.mjs",
+      "types": "./dist/org/nostr/nip35/index.d.ts",
+      "require": "./dist/org/nostr/nip35/index.cjs"
+    },
+    "./nip52": {
+      "import": "./dist/org/nostr/nip52/index.mjs",
+      "types": "./dist/org/nostr/nip52/index.d.ts",
+      "require": "./dist/org/nostr/nip52/index.cjs"
+    },
+    "./nip65": {
+      "import": "./dist/org/nostr/nip65/index.mjs",
+      "types": "./dist/org/nostr/nip65/index.d.ts",
+      "require": "./dist/org/nostr/nip65/index.cjs"
+    },
+    "./nip78": {
+      "import": "./dist/org/nostr/nip78/index.mjs",
+      "types": "./dist/org/nostr/nip78/index.d.ts",
+      "require": "./dist/org/nostr/nip78/index.cjs"
+    }
+  },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "gts clean && npm run clear && tsc-multi",
+    "clear": "rimraf tsconfig.cjs.tsbuildinfo tsconfig.mjs.tsbuildinfo tsconfig.js.tsbuildinfo",
     "prepublishOnly": "npm run build",
-    "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts"
+    "patch": "npm version patch",
+    "snapshot": "npm version prerelease --preid snapshot --no-git-tag-version",
+    "publish": "npm publish",
+    "local": "npm publish --registry=http://localhost:4873",
+    "test": "mocha --require mock-local-storage --import tsx test/**/*.test.ts",
+    "lint": "gts lint",
+    "format": "prettier --write .",
+    "fix": "gts fix"
   },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [],
   "author": "Rene Malmgren",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@eslint/js": "^9.21.0",
     "@types/chai": "^5.0.1",
     "@types/expect": "^24.3.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.9.0",
     "@types/ssh2": "^1.15.4",
     "chai": "^5.1.2",
+    "eslint": "^8.57.1",
+    "globals": "^16.0.0",
+    "gts": "^6.0.2",
     "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
+    "rimraf": "^6.0.1",
     "ssh2": "^1.16.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.2",
+    "tsc-multi": "^1.1.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.25.0"
   },
   "mocha": {
     "node-option": [
@@ -39,17 +125,9 @@
   },
   "dependencies": {
     "@noble/hashes": "^1.5.0",
-    "@welshman/app": "~0.0.29",
-    "@welshman/content": "~0.0.12",
-    "@welshman/dvm": "~0.0.10",
-    "@welshman/feeds": "~0.0.25",
-    "@welshman/lib": "~0.0.26",
-    "@welshman/net": "~0.0.38",
-    "@welshman/signer": "~0.0.14",
-    "@welshman/store": "~0.0.12",
-    "@welshman/util": "~0.0.45",
+    "@red-token/mitt": "^3.0.3",
+    "@red-token/welshman": "^0.2.4",
     "deepmerge": "^4.3.1",
-    "mitt": "^3.0.1",
     "node-ssh": "^13.2.0",
     "nostr-tools": "^2.10.3"
   }

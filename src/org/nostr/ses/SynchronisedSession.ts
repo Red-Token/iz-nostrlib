@@ -1,23 +1,25 @@
-import {addSession, getSigner, Session} from "@welshman/app";
-import {SynchronisedEventStream} from "./SynchronisedEventStream.js";
-import {ISigner} from "@welshman/signer";
-import {NostrClient} from "../client/NostrClient.js";
+import {addSession, getSigner, Session} from '@red-token/welshman/app'
+import {SynchronisedEventStream} from './SynchronisedEventStream.js'
+import {ISigner} from '@red-token/welshman/signer'
+import {NostrClient} from '../client/NostrClient.js'
 
+// Signature data type
 export type SignerData = {
-    type: SignerType,
-    nsec?: string,
-    pubkey?: string,
-    relays?: string[],
-    rpubkey?: string,
-    secret?: string,
+    type: SignerType
+    nsec?: string
+    pubkey?: string
+    relays?: string[]
+    rpubkey?: string
+    secret?: string
 }
 
 export enum SignerType {
     NIP01 = 'nip01',
     NIP07 = 'nip07',
-    NIP46 = 'nip46',
+    NIP46 = 'nip46'
 }
 
+// Кsession class linking relay, event stream and signature
 /**
  * A SynchronisedSession uses one identity and a set of Subscriptions to create a SynchronisedEventStream. It also
  * Allows the user to create a set of Publishers that can be used to publish events into the EventStream.
@@ -38,9 +40,8 @@ export enum SignerType {
  *
  */
 export class SynchronisedSession {
-
-    protected signer: ISigner | undefined;
-    public eventStream: SynchronisedEventStream;
+    protected signer: ISigner | undefined // Signature object
+    public eventStream: SynchronisedEventStream // Stream of events
 
     /**
      * Arms the Session with the signature data
@@ -55,7 +56,6 @@ export class SynchronisedSession {
      * @param signerData
      */
     async init(signerData: SignerData): Promise<SynchronisedSession> {
-
         return this.init2(NostrClient.transformer[signerData.type](signerData))
         // return new Promise<SynchronisedSession>((resolve, reject) => {
         //     const wsession = NostrClient.transformer[signerData.type](signerData)
@@ -65,18 +65,21 @@ export class SynchronisedSession {
         // })
     }
 
+    // Internal initialisation method with Session object from welshman
     async init2(wsession: Session): Promise<SynchronisedSession> {
         return new Promise<SynchronisedSession>((resolve, reject) => {
-            addSession(wsession)
-            this.signer = getSigner(wsession)
+            addSession(wsession) // Adding a session to welshman
+            this.signer = getSigner(wsession) // Getting a signer
             resolve(this)
         })
     }
 
+    // Check if the session is initialised
     isInitialized(): boolean {
         return this.signer !== undefined
     }
 
+    // Obtaining the signer's public key
     // createPublisher() {
     //     return new Publisher(this, this.)
     // }
@@ -84,8 +87,7 @@ export class SynchronisedSession {
     // createSubscription(filters: any) {
     //     return new Subscription(this, filters, this.relays)
     // }
-
     async getPublicKey() {
-        return this.signer?.getPubkey();
+        return this.signer?.getPubkey()
     }
 }

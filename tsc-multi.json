@@ -1,0 +1,7 @@
+{
+  "targets": [
+    {"extname": ".mjs", "module": "nodenext", "moduleResolution": "nodenext"},
+    {"extname": ".js", "module": "nodenext", "moduleResolution": "nodenext"}
+  ],
+  "projects": ["tsconfig.json"]
+}

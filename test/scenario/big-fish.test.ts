@@ -1,15 +1,12 @@
-import {EventType, Followee, Nip02FollowListEvent, SignerData, SignerType} from '../../src'
-import {normalizeRelayUrl, TrustedEvent} from "@welshman/util";
+import {EventType, SignerData, SignerType} from '../../src'
+import {normalizeRelayUrl, TrustedEvent} from "@red-token/welshman/util";
 import {GlobalNostrContext} from "../../src/org/nostr/communities/GlobalNostrContext";
 import {DynamicPublisher} from "../../src/org/nostr/ses/DynamicPublisher";
 import {Nip01UserMetaDataEvent, UserType} from "../../src/org/nostr/nip01/Nip01UserMetaData";
 import {NostrUserProfileMetaData} from "../../src/org/nostr/nip01/NostrUserProfileMetaData";
-import {
-    CommunityNostrContext
-} from "../../src/org/nostr/communities/CommunityNostrContext";
-import {getDefaultAppContext, getDefaultNetContext} from "@welshman/app";
-import {setContext} from "@welshman/lib";
-import {wait} from '../util'
+import {CommunityNostrContext} from "../../src/org/nostr/communities/CommunityNostrContext";
+import {getDefaultAppContext, getDefaultNetContext} from "@red-token/welshman/app";
+import {setContext} from "@red-token/welshman/lib";
 import {expect} from "chai";
 import {Nip65RelayListMetadataEvent} from "../../src/org/nostr/nip65/Nip65RelayListMetadata";
 import {Nip78ArbitraryCustomAppData} from "../../src/org/nostr/nip78/Nip78ArbitraryCustomAppData";
@@ -21,7 +18,8 @@ import {Nip35TorrentEvent, Nip35TorrentEventHandler} from "../../src/org/nostr/n
 import {DynamicSubscription} from "../../src/org/nostr/ses/DynamicSubscription";
 import {StaticEventsProcessor} from "../../src/org/nostr/ses/StaticEventsProcessor";
 import {asyncCreateWelshmanSession, Identifier, Identity} from "../../src/org/nostr/communities/Identity";
-import {generateSecretKey, nip19} from "nostr-tools";
+import {Followee, Nip02FollowListEvent} from "../../src/org/nostr/nip02";
+import {wait} from "../util";
 
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';

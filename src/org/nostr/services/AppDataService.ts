@@ -1,4 +1,4 @@
-import type {TrustedEvent} from "@welshman/util";
+import type {TrustedEvent} from "@red-token/welshman/util";
 import {EventType} from "../ses/SynchronisedEventStream.js";
 import {DynamicSubscription} from "../ses/DynamicSubscription.js";
 import {Nip78ArbitraryCustomAppData, Nip78ArbitraryCustomAppDataHandler} from "../nip78/Nip78ArbitraryCustomAppData.js";

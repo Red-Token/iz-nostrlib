@@ -1,5 +1,5 @@
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
-import type {TrustedEvent} from "@welshman/util";
+import type {TrustedEvent} from "@red-token/welshman/util";
 import {Nip10EtagMarker} from "../nip35/Nip35TorrentEvent.js";
 
 export function updateIfNewer<T extends AbstractNipMiniEvent>(candidate: T, key: string, map: Map<string, T>) {

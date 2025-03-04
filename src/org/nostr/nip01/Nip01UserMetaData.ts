@@ -1,35 +1,34 @@
-import type {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
+import type {CreateEventOpts, HashedEvent, TrustedEvent} from '@red-token/welshman/util'
 import {
     AbstractNipMiniEvent,
     safeFindOptionalMultiTagValues,
     safeFindOptionalSingleTagValue
-} from "../AbstractNipEvent.js";
-import {NostrUserProfileMetaData} from "./NostrUserProfileMetaData.js";
-import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
+} from '../AbstractNipEvent.js'
+import {NostrUserProfileMetaData} from './NostrUserProfileMetaData.js'
+import {AbstractEventProcessor} from '../ses/StaticEventsProcessor.js'
 
 export enum UserType {
-    INDIVIDUAL = "individual",
-    COMMUNITY = 'community',
+    INDIVIDUAL = 'individual',
+    COMMUNITY = 'community'
 }
 
 const stringToEnum = (value: string): UserType | undefined => {
-    return (Object.entries(UserType) as [keyof typeof UserType, string][])
-        .find(([_, val]) => val === value)?.[1] as UserType | undefined;
-};
+    return (Object.entries(UserType) as [keyof typeof UserType, string][]).find(([_, val]) => val === value)?.[1] as
+        | UserType
+        | undefined
+}
 
 function defaultIfUndefined<T>(value: T | undefined, defaultValue: T): T {
-    return value === undefined ? defaultValue : value;
+    return value === undefined ? defaultValue : value
 }
 
 export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
-    public static KIND: number = 0;
+    public static KIND: number = 0
 
     static buildFromEvent(event: HashedEvent) {
         return new Nip01UserMetaDataEvent(
             JSON.parse(event.content),
-            defaultIfUndefined(
-                safeFindOptionalSingleTagValue(event, 'c'),
-                UserType.INDIVIDUAL),
+            defaultIfUndefined(safeFindOptionalSingleTagValue(event, 'c'), UserType.INDIVIDUAL),
             safeFindOptionalMultiTagValues(event, 'n'),
             [],
             event
@@ -42,7 +41,7 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
                 tags: string[][] = [],
                 event?: TrustedEvent
     ) {
-        super(tags, event);
+        super(tags, event)
     }
 
     get kind() {
@@ -50,7 +49,7 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
     }
 
     get opts(): CreateEventOpts {
-        const nTags = this.capabilities.map(capability => {
+        const nTags = this.capabilities.map((capability) => {
             return ['n', ...capability]
         })
 
@@ -73,7 +72,6 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
 
 export class Nip01UserMetaDataEventHandler extends AbstractEventProcessor<Nip01UserMetaDataEvent> {
     constructor(handler: (event: Nip01UserMetaDataEvent) => void) {
-        super(Nip01UserMetaDataEvent.KIND, Nip01UserMetaDataEvent.buildFromEvent, handler);
+        super(Nip01UserMetaDataEvent.KIND, Nip01UserMetaDataEvent.buildFromEvent, handler)
     }
 }
-

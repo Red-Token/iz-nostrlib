@@ -1,0 +1,1 @@
+export * from '../nip65/Nip65RelayListMetadata.js'

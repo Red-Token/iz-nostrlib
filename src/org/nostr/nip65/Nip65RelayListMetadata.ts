@@ -1,4 +1,4 @@
-import {CreateEventOpts, HashedEvent, TrustedEvent} from "@welshman/util";
+import {CreateEventOpts, HashedEvent, TrustedEvent} from "@red-token/welshman/util";
 import {AbstractNipMiniEvent, safeFindOptionalMultiTagValues} from "../AbstractNipEvent.js";
 import {AbstractEventProcessor} from "../ses/StaticEventsProcessor.js";
 

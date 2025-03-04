@@ -1,4 +1,4 @@
-import type {TrustedEvent} from "@welshman/util";
+import type {TrustedEvent} from "@red-token/welshman/util";
 import {EventType} from "../ses/SynchronisedEventStream.js";
 import {Nip01UserMetaDataEvent, Nip01UserMetaDataEventHandler} from "../nip01/Nip01UserMetaData.js";
 import {AbstractNostrContext} from "../communities/AbstractNostrContext.js";

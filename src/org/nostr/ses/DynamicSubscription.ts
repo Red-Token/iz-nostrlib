@@ -1,6 +1,6 @@
-import {PartialSubscribeRequest, subscribe} from "@welshman/app";
-import {Filter, TrustedEvent} from "@welshman/util";
-import {Subscription} from "@welshman/net";
+import {PartialSubscribeRequest, subscribe} from "@red-token/welshman/app";
+import {Filter, TrustedEvent} from "@red-token/welshman/util";
+import {Subscription} from "@red-token/welshman/net";
 import {DynamicSynchronisedSession} from "./DynamicSynchronisedSession.js";
 
 export class DynamicSubscription {

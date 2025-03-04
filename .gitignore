@@ -2,3 +2,6 @@
 
 /node_modules/
 /dist
+tsconfig.mjs.tsbuildinfo
+tsconfig.cjs.tsbuildinfo
+tsconfig.js.tsbuildinfo
