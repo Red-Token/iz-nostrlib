@@ -126,7 +126,7 @@
   "dependencies": {
     "@noble/hashes": "^1.5.0",
     "@red-token/mitt": "^3.0.3",
-    "@red-token/welshman": "^0.2.4",
+    "@red-token/welshman": "^0.2.7-snapshot.1",
     "deepmerge": "^4.3.1",
     "node-ssh": "^13.2.0",
     "nostr-tools": "^2.10.3"
