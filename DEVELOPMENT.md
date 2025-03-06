@@ -36,3 +36,68 @@ you then work on your code, with snapshots, when you feel it's done you then mer
 
 Now the cool thing would be if you would track the issues by moving the to ongoing when you create the branches.
 
+### Scenario
+
+We have task-1 in module A, and we will also modify module B, task-2.
+
+First we branch module A 
+
+    git branch task-1; git checkout task-1; 
+
+We update .npmrc
+
+    module-A:registry=http://localhost:4873
+    module-B:registry=http://localhost:4873
+
+Then we step the version of the module into a snapshot
+
+    npm version prepatch --preid snapshot
+
+Then we checkout module B
+
+    git branch task-2; git checkout task-2;
+    module-B:registry=http://localhost:4873
+    npm version prepatch --preid snapshot
+
+Now we develop our modules from this code base: For every time we need to sync we do
+
+in module B:
+
+    npm publish
+    npm version prerelease --preid snapshot
+
+in module A:
+
+    npm install module-B@latest
+
+Now we are done, everything works, we therefor merge with main rel
+
+    git fetch; git merge origin/main
+
+Retest, if everything goes fine make a release of module-B (signed commit)
+
+    npm version patch
+    git checkout main; git pull; git merge -S task-1 -m "Closes #task-2"
+
+We can now make an official update to module-B
+
+    git push; npm publish 
+
+We update npmrc in module-A to pull module-B from official repo and retest
+
+    git fetch; git merge origin/main
+    npm install module-B@latest
+    npm version patch
+    git checkout main; git pull; git merge -S task-1 -m "Closes #task-1"
+
+We now publish module-A
+
+    git push
+
+
+
+
+    
+
+
+
