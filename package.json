@@ -1,6 +1,6 @@
 {
   "name": "iz-nostrlib",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Library that support Nostr messages",
   "type": "module",
   "types": "./dist/index.d.ts",
