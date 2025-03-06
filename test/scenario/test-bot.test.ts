@@ -17,6 +17,7 @@ import {
     Nip9999SeederTorrentTransformationRequestEvent, Nip9999SeederTorrentTransformationResponseEvent,
     NostrCommunityServiceBot
 } from "../../src/org/nostr/seederbot/index.js";
+import {setContext} from "@red-token/welshman/lib";
 
 const gurl = 'wss://relay.pre-alfa.iz-stream.com'
 const url = 'wss://relay.big-fish.communities.pre-alfa.iz-stream.com';
