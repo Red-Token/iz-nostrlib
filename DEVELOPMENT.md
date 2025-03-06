@@ -28,13 +28,11 @@ We should consider using our own npmrepo for stuff that are not yet ready for re
 
 ## Branching strategy
 
-I would advice that we suse task based branching.
+The branch holding the next release is named **master**.
 
-So when you start your work you make a branch with a task in it
+If this product has an upstream product this branch is named **upstream**.
 
-you then work on your code, with snapshots, when you feel it's done you then merge in what is on main. and publish. 
-
-Now the cool thing would be if you would track the issues by moving the to ongoing when you create the branches.
+Task branches are named **task-#id**
 
 ### Scenario
 
@@ -93,11 +91,3 @@ We update npmrc in module-A to pull module-B from official repo and retest
 We now publish module-A
 
     git push
-
-
-
-
-    
-
-
-
