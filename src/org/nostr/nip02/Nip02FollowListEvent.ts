@@ -47,7 +47,7 @@ export class Nip02FollowListEvent extends AbstractNipMiniEvent {
         }))
 
         const tags = [
-            ...this.tags,
+            ...this._userTags,
             ...pTags
         ];
 

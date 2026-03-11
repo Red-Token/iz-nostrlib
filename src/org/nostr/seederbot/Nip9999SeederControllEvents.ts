@@ -21,29 +21,44 @@ export class Nip9999SeederTorrentTransformationRequestEvent extends AbstractNipM
         public p: string,
         public title: string,
         public x: string,
-        public content: any,
+        private _content: any,
         tags: string[][] = [],
         event?: TrustedEvent) {
         super(tags, event);
+    }
+
+    get content(): string {
+        return JSON.stringify(this._content);
     }
 
     get kind() {
         return Nip9999SeederTorrentTransformationRequestEvent.KIND
     }
 
-    get opts(): CreateEventOpts {
-        const tags = [
-            ...this.tags,
-            ['p', this.p],
+    get pTags(): string[][] {
+        return [[this.p]]
+    }
+
+    get otherTags(): string[][] {
+        return [
             ['title', this.title],
             ['x', this.x],
-        ];
-
-        return {
-            content: JSON.stringify(this.content),
-            tags
-        }
+        ]
     }
+
+    // get opts(): CreateEventOpts {
+    //     const tags = [
+    //         ...this._tags,
+    //         ['p', this.p],
+    //         ['title', this.title],
+    //         ['x', this.x],
+    //     ];
+    //
+    //     return {
+    //         content: JSON.stringify(this.content),
+    //         tags
+    //     }
+    // }
 }
 
 export class Nip9999SeederTorrentTransformationResponseEvent extends AbstractNipMiniEvent {
@@ -58,7 +73,7 @@ export class Nip9999SeederTorrentTransformationResponseEvent extends AbstractNip
         )
     }
 
-    constructor(public state: any, public id: string, tags: string[][] = [], event?: TrustedEvent) {
+    constructor(public state: any, public asid: string, tags: string[][] = [], event?: TrustedEvent) {
         super([...tags], event);
     }
 
@@ -68,9 +83,9 @@ export class Nip9999SeederTorrentTransformationResponseEvent extends AbstractNip
 
     get opts(): CreateEventOpts {
         const tags = [
-            ...this.tags,
-            ['e', this.id, '', 'root'],
-            ['d', this.id],
+            ...this._userTags,
+            ['e', this.asid, '', 'root'],
+            ['d', this.asid],
         ];
 
         return {

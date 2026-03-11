@@ -55,7 +55,7 @@ export class Nip01UserMetaDataEvent extends AbstractNipMiniEvent {
         })
 
         const tags = [
-            ...this.tags,
+            ...this._userTags,
             ...nTags,
             ['c', this._type]
         ];

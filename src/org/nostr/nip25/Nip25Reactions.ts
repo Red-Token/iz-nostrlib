@@ -26,7 +26,7 @@ export class Nip25ReactionsEvent extends AbstractNipMiniEvent {
 
     get opts(): CreateEventOpts {
         const tags = [
-            ...this.tags,
+            ...this._userTags,
         ];
 
         return {

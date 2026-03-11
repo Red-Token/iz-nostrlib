@@ -44,7 +44,7 @@ export class Nip35TorrentEvent extends AbstractNipMiniEvent {
     }
 
     get opts(): CreateEventOpts {
-        const tags = [...this.tags, ['title', this.title], ['x', this.x]]
+        const tags = [...this._userTags, ['title', this.title], ['x', this.x]]
 
         this.files
             .map((file) => {
@@ -113,7 +113,7 @@ export class Nip35TorrentEventComments extends AbstractNipMiniEvent {
     }
 
     get opts(): CreateEventOpts {
-        const tags = [...this.tags]
+        const tags = [...this._userTags]
 
         return {
             content: JSON.stringify(this.description),

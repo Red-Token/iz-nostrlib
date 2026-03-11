@@ -29,7 +29,7 @@ export class Nip78ArbitraryCustomAppData<T> extends AbstractNipMiniEvent {
     get opts(): CreateEventOpts {
 
         const tags = [
-            ...this.tags,
+            ...this._userTags,
             ['d', this.app]
         ];
 

@@ -35,7 +35,7 @@ export class Nip65RelayListMetadataEvent extends AbstractNipMiniEvent {
         })
 
         const tags = [
-            ...this.tags,
+            ...this._userTags,
             ...rTags
         ];
 

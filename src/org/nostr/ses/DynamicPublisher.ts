@@ -18,10 +18,24 @@ export class DynamicPublisher {
     }
 
     prepare(event: AbstractNipMiniEvent): OwnedEvent {
-        return own(createEvent(event.kind, event.opts), this.identity.pubkey)
+        const prepared = own(createEvent(event.kind, event.opts), this.identity.pubkey)
+        const preparedAny = prepared as Record<string, unknown>
+        console.info('[iz-nostrlib] DynamicPublisher.prepare', {
+            kind: event.kind,
+            identityPubkey: this.identity.pubkey,
+            preparedKeys: Object.keys(preparedAny),
+            preparedId: (preparedAny['id'] as string | undefined) ?? null
+        })
+        return prepared
     }
 
     send(event: OwnedEvent) {
+        const eventAny = event as Record<string, unknown>
+        console.info('[iz-nostrlib] DynamicPublisher.send', {
+            eventKeys: Object.keys(eventAny),
+            eventId: (eventAny['id'] as string | undefined) ?? null,
+            relays: this.session.relays.value
+        })
         return publishThunk({
             event: event,
             relays: this.session.relays.value,
@@ -29,6 +43,16 @@ export class DynamicPublisher {
     }
 
     publish(event: AbstractNipMiniEvent) {
-        return this.send(this.prepare(event))
+        console.info('[iz-nostrlib] DynamicPublisher.publish begin', {
+            kind: event.kind
+        })
+        const prepared = this.prepare(event)
+        const result = this.send(prepared)
+        const preparedAny = prepared as Record<string, unknown>
+        console.info('[iz-nostrlib] DynamicPublisher.publish end', {
+            eventId: (preparedAny['id'] as string | undefined) ?? null,
+            resultType: typeof result
+        })
+        return result
     }
 }
